@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('xiaomi-ht', {
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            gateway: {value:"", type:"xiaomi-gateway"},
+            name: {value: ""},
+            sid: {value: "", required: true, validate: RED.validators.regex(/^[a-f0-9]{14}$/)},
+            temperature: {value: "{{temperature}}"},
+            humidity: {value: "{{humidity}}"},
+            output: {value: "0"}
+        },
+        inputs: 0,
+        outputs: 2,
+        outputLabels: ["Temperature","Humidity"],
+        icon: "thermometer-icon.png",
+        label: function () {
+            return this.name || "xiaomi-ht";
+        },
+        oneditprepare: function() {
+            $("#node-input-output").change(function () {
+                if ($(this).val() == "2") {
+                    $(".node-input-msg").show();
+                } else {
+                    $(".node-input-msg").hide();
+                }
+            });
+
+            $(".node-input-msg").hide();
+            $("#node-input-output").val(node.output);
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="xiaomi-ht">
+    <div class="form-row">
+        <label for="node-input-gateway"><i class="icon-tag"></i> Gateway</label>
+        <input type="text" id="node-input-gateway" placeholder="xiaomi gateway">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sid"><i class="fa fa-id-badge"></i> Device SID</label>
+        <input type="text" id="node-input-sid">
+    </div>
+    <div class="form-row">
+        <label for="node-input-output"><i class="icon-tag"></i> Output</label>
+        <select id="node-input-output" style="width:70%;">
+            <option value="0">Full data</option>
+            <option value="1">Just values</option>
+            <option value="2">Template</option>
+        </select>
+    </div>
+    <div class="form-row node-input-msg">
+        <label for="node-input-temperature"><i class="fa fa-thermometer-three-quarters"></i> Temperature</label>
+        <input type="text" id="node-input-temperature">
+    </div>
+    <div class="form-row node-input-msg">
+        <label for="node-input-humidity"><i class="fa fa-mixcloud"></i> Humidity</label>
+        <input type="text" id="node-input-humidity">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="xiaomi-ht">
+    <p>A simple node that converts the message payloads into a temperature and a humidity message for the MQTT homebridge plugin</p>
+
+</script>

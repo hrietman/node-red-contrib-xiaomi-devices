@@ -1,0 +1,39 @@
+<script type="text/javascript">
+    RED.nodes.registerType('xiaomi-gateway', {
+        category: 'config',
+        defaults: {
+            name: {value: ""},
+            group: {value: "224.0.0.50", required: true},
+            port: {value: 9898, required: true, validate:RED.validators.number()},
+            udpv: {value: "udp4"}
+        },
+        label: function () {
+            return this.name || "xiaomi-gateway";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="xiaomi-gateway">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+
+     <div class="form-row">
+        <label for="node-config-input-group"><i class="fa fa-list"></i> Group</label>
+        <input type="text" id="node-config-input-group">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-port"><i class="fa fa-sign-in"></i> on Port</label>
+        <input type="text" id="node-config-input-port" style="width:80px">
+        <span for="node-config-input-udpv"> using</span>
+        <select id="node-config-input-udpv" style="width:80px">
+          <option value="udp4">udp4</option>
+          <option value="udp6">udp6</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="xiaomi-gateway">
+    <p>Configuration node for a xiaomi gateway device</p>
+</script>
