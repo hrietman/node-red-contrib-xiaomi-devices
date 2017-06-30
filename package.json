@@ -18,6 +18,7 @@
   },
   "homepage": "https://gitlab.com/h-rietman/xiaomi-devices-node-red#README",
   "dependencies": {
+    "cryptojs": "^2.5.3",
     "mustache": "^2.3.0"
   }
 }

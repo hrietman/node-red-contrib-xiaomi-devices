@@ -1,12 +1,12 @@
 <script type="text/javascript">
-    RED.nodes.registerType('xiaomi-gateway', {
+    RED.nodes.registerType('xiaomi-configurator', {
         category: 'config',
         defaults: {
             name: {value: ""},
             deviceList: {value:[{ sid:"a", desc:"b", model:"plug"}]}
         },
         label: function () {
-            return this.name || "xiaomi-gateway";
+            return this.name || "xiaomi-configurator";
         },
         oneditprepare: function() {
             var node = this;
@@ -76,7 +76,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="xiaomi-gateway">
+<script type="text/x-red" data-template-name="xiaomi-configurator">
     <div class="form-row">
         <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name">
@@ -86,6 +86,6 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="xiaomi-gateway">
+<script type="text/x-red" data-help-name="xiaomi-configurator">
     <p>Configuration node for a xiaomi gateway device</p>
 </script>

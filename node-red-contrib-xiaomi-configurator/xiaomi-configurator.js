@@ -1,6 +1,6 @@
 module.exports = function(RED) {
 
-    function RemoteServerNode(n) {
+    function XiaomiConfiguratorNode(n) {
         RED.nodes.createNode(this, n);
         this.name = n.name;
         this.deviceList = n.deviceList || [];
@@ -8,6 +8,6 @@ module.exports = function(RED) {
         var node = this;
     }
 
-    RED.nodes.registerType("xiaomi-gateway", RemoteServerNode);
+    RED.nodes.registerType("xiaomi-configurator", XiaomiConfiguratorNode);
 
 }

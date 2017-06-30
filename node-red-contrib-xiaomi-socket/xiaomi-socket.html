@@ -1,21 +1,21 @@
 <script type="text/javascript">
-    RED.nodes.registerType('xiaomi-ht', {
+    RED.nodes.registerType('xiaomi-plug', {
         category: 'function',
         color: '#a6bbcf',
         defaults: {
             gateway: {value:"", type:"xiaomi-configurator"},
             name: {value: ""},
             sid: {value: "", required: true},
-            temperature: {value: "{{temperature}}"},
-            humidity: {value: "{{humidity}}"},
+            onmsg: {value: ""},
+            offmsg: {value: ""},
             output: {value: "0"}
         },
         inputs: 1,
         outputs: 2,
-        outputLabels: ["Temperature","Humidity"],
-        icon: "thermometer-icon.png",
+        outputLabels: ["Status","Control"],
+        icon: "outlet-icon.png",
         label: function () {
-            return this.name || "xiaomi-ht";
+            return this.name || "xiaomi-plug";
         },
         oneditprepare: function() {
             var node = this;
@@ -33,16 +33,13 @@
                 }
             });
 
-            $(".node-input-msg").hide();
-            $("#node-input-output").val(node.output);
-
             $("#node-input-gateway").change(function () {
 
             });
 
             for (key in configNode.deviceList) {
                 var device = configNode.deviceList[key];
-                if (device.model === "sensor_ht") {
+                if (device.model === "plug") {
                     $('#node-input-sid').append('<option value="' + device.sid + '">' + device.desc + '</option>');
                 }
             }
@@ -55,7 +52,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="xiaomi-ht">
+<script type="text/x-red" data-template-name="xiaomi-plug">
     <div class="form-row">
         <label for="node-input-gateway"><i class="icon-tag"></i> Gateway</label>
         <input type="text" id="node-input-gateway" placeholder="xiaomi gateway">
@@ -68,10 +65,6 @@
         <label for="node-input-sid"><i class="icon-tag"></i> Device</label>
         <select id="node-input-sid" placeholder="xiaomi gateway"></select>
     </div>
-    <!--<div class="form-row">-->
-        <!--<label for="node-input-sid"><i class="fa fa-id-badge"></i> Device SID</label>-->
-        <!--<input type="text" id="node-input-sid">-->
-    <!--</div>-->
     <div class="form-row">
         <label for="node-input-output"><i class="icon-tag"></i> Output</label>
         <select id="node-input-output" style="width:70%;">
@@ -81,16 +74,15 @@
         </select>
     </div>
     <div class="form-row node-input-msg">
-        <label for="node-input-temperature"><i class="fa fa-thermometer-three-quarters"></i> Temperature</label>
-        <input type="text" id="node-input-temperature">
+        <label for="node-input-onmsg"><i class="fa fa-thermometer-three-quarters"></i> On msg</label>
+        <input type="text" id="node-input-onmsg">
     </div>
     <div class="form-row node-input-msg">
-        <label for="node-input-humidity"><i class="fa fa-mixcloud"></i> Humidity</label>
-        <input type="text" id="node-input-humidity">
+        <label for="node-input-offmsg"><i class="fa fa-mixcloud"></i> Off msg</label>
+        <input type="text" id="node-input-offmsg">
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="xiaomi-ht">
-    <p>A simple node that converts the message payloads into a temperature and a humidity message for the MQTT homebridge plugin</p>
-
+<script type="text/x-red" data-help-name="xiaomi-plug">
+    <p>A simple node that converts the message payloads into a ON or OFF message</p>
 </script>
