@@ -10,6 +10,7 @@ module.exports = function(RED) {
         this.output = config.output;
         this.onmsg = config.onmsg;
         this.offmsg = config.offmsg;
+        this.key = this.gateway.key;
 
         var node = this;
         var currentToken = "";
@@ -23,11 +24,10 @@ module.exports = function(RED) {
                 var payload = msg.payload;
 
                 if (payload.cmd == "heartbeat" && payload.model == "gateway") {
-                    var key = "c7utmdo2acpzai5b";
                     var token = payload.token;
 
                     if (token) {
-                        var cipher = crypto.createCipheriv('aes128', key, (new Buffer("17996d093d28ddb3ba695a2e6f58562e", "hex")));
+                        var cipher = crypto.createCipheriv('aes128', node.key, (new Buffer("17996d093d28ddb3ba695a2e6f58562e", "hex")));
                         var encoded_string = cipher.update(token, 'utf8', 'hex');
 
                         encoded_string += cipher.final('hex');

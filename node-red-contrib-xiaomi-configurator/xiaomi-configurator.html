@@ -3,15 +3,14 @@
         category: 'config',
         defaults: {
             name: {value: ""},
-            deviceList: {value:[{ sid:"a", desc:"b", model:"plug"}]}
+            deviceList: {value:[{ sid:"a", desc:"b", model:"plug"}]},
+            key: {value: ""}
         },
         label: function () {
             return this.name || "xiaomi-configurator";
         },
         oneditprepare: function() {
             var node = this;
-
-            console.log("config window openend: " + node.deviceList);
 
             $("#node-config-input-devices").css('min-height','250px').css('min-width','450px').editableList({
                 addItem: function(container, i, device) {
@@ -46,7 +45,6 @@
                 removable: true
             });
 
-            console.log("Devices: " + JSON.stringify(node.deviceList));
             for (var i=0;i<this.deviceList.length;i++) {
                 var device = this.deviceList[i];
                 $("#node-config-input-devices").editableList('addItem', device);
@@ -62,16 +60,13 @@
                 var sid = deviceElement.find("#node-config-input-sid-"+i).val();
                 var desc = deviceElement.find("#node-config-input-desc-"+i).val();
                 var model = deviceElement.find("#node-config-input-model-"+i).val();
-                console.log(desc, model, sid);
                 var d = {};
                 d['sid']=sid;
                 d['desc']=desc;
                 d['model']=model;
-                console.log(d);
                 devicesArray.push(d);
             });
             node.deviceList = devicesArray;
-            console.log("devices-list: " + JSON.stringify(node.deviceList));
         }
     });
 </script>
@@ -80,6 +75,10 @@
     <div class="form-row">
         <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+        <div class="form-row">
+        <label for="node-config-input-key"><i class="fa fa-ticket"></i> Key</label>
+        <input type="text" id="node-config-input-key" placeholder="Key">
     </div>
     <div class="form-row node-config-input-devices">
         <ol id="node-config-input-devices"></ol>
