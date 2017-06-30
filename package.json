@@ -1,0 +1,20 @@
+{
+  "name": "node-red",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/h-rietman/xiaomi-devices-node-red.git"
+  },
+  "keywords": [],
+  "author": "Harald Rietman <harald.rietman@portofrotterdam.com> (http://blog.example.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/h-rietman/xiaomi-devices-node-red/issues"
+  },
+  "homepage": "https://gitlab.com/h-rietman/xiaomi-devices-node-red#README"
+}

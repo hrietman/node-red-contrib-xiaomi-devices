@@ -5,12 +5,12 @@
         defaults: {
             gateway: {value:"", type:"xiaomi-gateway"},
             name: {value: ""},
-            sid: {value: "", required: true, validate: RED.validators.regex(/^[a-f0-9]{14}$/)},
+            sid: {value: "", required: true},
             temperature: {value: "{{temperature}}"},
             humidity: {value: "{{humidity}}"},
             output: {value: "0"}
         },
-        inputs: 0,
+        inputs: 1,
         outputs: 2,
         outputLabels: ["Temperature","Humidity"],
         icon: "thermometer-icon.png",
@@ -18,6 +18,13 @@
             return this.name || "xiaomi-ht";
         },
         oneditprepare: function() {
+            var node = this;
+
+            // Get the config node id from the select box:
+            var configNodeID = $('#node-input-gateway').val();
+            // Get the config node using the ID:
+            var configNode = RED.nodes.node(configNodeID);
+
             $("#node-input-output").change(function () {
                 if ($(this).val() == "2") {
                     $(".node-input-msg").show();
@@ -29,6 +36,19 @@
             $(".node-input-msg").hide();
             $("#node-input-output").val(node.output);
 
+            $("#node-input-gateway").change(function () {
+
+            });
+
+            for (key in configNode.deviceList) {
+                var device = configNode.deviceList[key];
+                $('#node-input-sid').append('<option value="' + device.sid + '">' + device.desc + '</option>');
+            }
+            $('#node-input-sid').val(node.sid);
+        },
+        oneditsave: function() {
+            var node = this;
+            node.sid = $("#node-input-sid").val();
         }
     });
 </script>
@@ -43,9 +63,13 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-sid"><i class="fa fa-id-badge"></i> Device SID</label>
-        <input type="text" id="node-input-sid">
+        <label for="node-input-sid"><i class="icon-tag"></i> Device</label>
+        <select id="node-input-sid" placeholder="xiaomi gateway"></select>
     </div>
+    <!--<div class="form-row">-->
+        <!--<label for="node-input-sid"><i class="fa fa-id-badge"></i> Device SID</label>-->
+        <!--<input type="text" id="node-input-sid">-->
+    <!--</div>-->
     <div class="form-row">
         <label for="node-input-output"><i class="icon-tag"></i> Output</label>
         <select id="node-input-output" style="width:70%;">

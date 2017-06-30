@@ -3,12 +3,75 @@
         category: 'config',
         defaults: {
             name: {value: ""},
-            group: {value: "224.0.0.50", required: true},
-            port: {value: 9898, required: true, validate:RED.validators.number()},
-            udpv: {value: "udp4"}
+            deviceList: {value:[{ sid:"a", desc:"b", model:"plug"}]}
         },
         label: function () {
             return this.name || "xiaomi-gateway";
+        },
+        oneditprepare: function() {
+            var node = this;
+
+            console.log("config window openend: " + node.deviceList);
+
+            $("#node-config-input-devices").css('min-height','250px').css('min-width','450px').editableList({
+                addItem: function(container, i, device) {
+                    if (!device.hasOwnProperty('model')) {
+                        device.model = 'sensor_ht';
+                    }
+                    var row = $('<div/>').appendTo(container);
+
+                    $('<label/>',{for:"node-config-input-sid-"+i, style:"margin-left: 3px; width: 30px;vertical-align:middle"}).text("sid").appendTo(row);
+                    var sid = $('<input/>',{id:"node-config-input-sid-"+i,type:"text", style:"width:auto;vertical-align:top"}).appendTo(row);
+
+                    $('<label/>',{for:"node-config-input-desc-"+i, style:"margin-left: 7px; width: 35px;vertical-align:middle"}).text("desc.").appendTo(row);
+                    var desc = $('<input/>',{id:"node-config-input-desc-"+i, type:"text", style:"width:auto;vertical-align:top"}).appendTo(row);
+
+                    var model = $('<select/>',{id:"node-config-input-model-"+i},{style:"width:120px; margin-left: 5px; text-align: center;"}).appendTo(row);
+                    model.append($("<option></option>").val("sensor_ht").text("sensor_ht"));
+                    model.append($("<option></option>").val("magnet").text("magnet"));
+                    model.append($("<option></option>").val("plug").text("plug"));
+                    model.append($("<option></option>").val("gateway").text("gateway"));
+                    model.append($("<option></option>").val("switch").text("switch"));
+
+                    sid.val(device.sid);
+                    desc.val(device.desc);
+                    model.val(device.model);
+
+                },
+                removeItem: function(opt) {
+                },
+                sortItems: function(rules) {
+                },
+                sortable: true,
+                removable: true
+            });
+
+            console.log("Devices: " + JSON.stringify(node.deviceList));
+            for (var i=0;i<this.deviceList.length;i++) {
+                var device = this.deviceList[i];
+                $("#node-config-input-devices").editableList('addItem', device);
+            }
+
+        },
+        oneditsave: function() {
+            var devices = $("#node-config-input-devices").editableList('items');
+            var node = this;
+            var devicesArray = [];
+            devices.each(function(i) {
+                var deviceElement = $(this);
+                var sid = deviceElement.find("#node-config-input-sid-"+i).val();
+                var desc = deviceElement.find("#node-config-input-desc-"+i).val();
+                var model = deviceElement.find("#node-config-input-model-"+i).val();
+                console.log(desc, model, sid);
+                var d = {};
+                d['sid']=sid;
+                d['desc']=desc;
+                d['model']=model;
+                console.log(d);
+                devicesArray.push(d);
+            });
+            node.deviceList = devicesArray;
+            console.log("devices-list: " + JSON.stringify(node.deviceList));
         }
     });
 </script>
@@ -18,19 +81,8 @@
         <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name">
     </div>
-
-     <div class="form-row">
-        <label for="node-config-input-group"><i class="fa fa-list"></i> Group</label>
-        <input type="text" id="node-config-input-group">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-port"><i class="fa fa-sign-in"></i> on Port</label>
-        <input type="text" id="node-config-input-port" style="width:80px">
-        <span for="node-config-input-udpv"> using</span>
-        <select id="node-config-input-udpv" style="width:80px">
-          <option value="udp4">udp4</option>
-          <option value="udp6">udp6</option>
-        </select>
+    <div class="form-row node-config-input-devices">
+        <ol id="node-config-input-devices"></ol>
     </div>
 </script>
 
