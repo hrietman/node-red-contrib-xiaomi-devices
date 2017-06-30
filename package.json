@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://gitlab.com/h-rietman/xiaomi-devices-node-red/issues"
   },
-  "homepage": "https://gitlab.com/h-rietman/xiaomi-devices-node-red#README"
+  "homepage": "https://gitlab.com/h-rietman/xiaomi-devices-node-red#README",
+  "dependencies": {
+    "mustache": "^2.3.0"
+  }
 }

@@ -42,7 +42,9 @@
 
             for (key in configNode.deviceList) {
                 var device = configNode.deviceList[key];
-                $('#node-input-sid').append('<option value="' + device.sid + '">' + device.desc + '</option>');
+                if (device.model === "sensor_ht") {
+                    $('#node-input-sid').append('<option value="' + device.sid + '">' + device.desc + '</option>');
+                }
             }
             $('#node-input-sid').val(node.sid);
         },
