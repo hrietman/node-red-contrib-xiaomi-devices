@@ -3,7 +3,7 @@
         category: 'config',
         defaults: {
             name: {value: ""},
-            deviceList: {value:[{ sid:"a", desc:"b", model:"plug"}]},
+            deviceList: {value:[{ sid:"", desc:"", model:"plug"}]},
             key: {value: ""}
         },
         label: function () {
@@ -12,6 +12,12 @@
         oneditprepare: function() {
             var node = this;
 
+            var tw_sensor_ht = {value:"sensor_ht", label:"sensor ht", icon:"icons/sensor-ht-tw-icon.png"};
+            var tw_magnet = {value:"magnet", label:"contact", icon:"icons/magnet-tw-icon.png"};
+            var tw_motion = {value:"motion", label:"motion", icon:"icons/motion-tw-icon.png"};
+            var tw_plug = {value:"plug", label:"plug", icon:"icons/plug-tw-icon.png"};
+            var tw_switch = {value:"switch", label:"switch", icon:"icons/switch-tw-icon.png"};
+
             $("#node-config-input-devices").css('min-height','250px').css('min-width','450px').editableList({
                 addItem: function(container, i, device) {
                     if (!device.hasOwnProperty('model')) {
@@ -19,23 +25,22 @@
                     }
                     var row = $('<div/>').appendTo(container);
 
-                    $('<label/>',{for:"node-config-input-sid-"+i, style:"margin-left: 3px; width: 30px;vertical-align:middle"}).text("sid").appendTo(row);
+                    $('<label/>',{for:"node-config-input-sid-"+i, style:"margin-left: 3px; width: 15px;vertical-align:middle"}).appendTo(row);
                     var sid = $('<input/>',{id:"node-config-input-sid-"+i,type:"text", style:"width:auto;vertical-align:top"}).appendTo(row);
+                    sid.typedInput({
+                        default: 'sensor_ht',
+                        types: [tw_sensor_ht, tw_magnet, tw_motion, tw_plug, tw_switch]
+                    });
 
-                    $('<label/>',{for:"node-config-input-desc-"+i, style:"margin-left: 7px; width: 35px;vertical-align:middle"}).text("desc.").appendTo(row);
+                    $('<label/>',{for:"node-config-input-desc-"+i, style:"margin-left: 7px; width: 20px;vertical-align:middle"}).html('<i class="fa fa-pencil-square-o"></i>').appendTo(row);
                     var desc = $('<input/>',{id:"node-config-input-desc-"+i, type:"text", style:"width:auto;vertical-align:top"}).appendTo(row);
 
-                    var model = $('<select/>',{id:"node-config-input-model-"+i},{style:"width:120px; margin-left: 5px; text-align: center;"}).appendTo(row);
-                    model.append($("<option></option>").val("sensor_ht").text("sensor_ht"));
-                    model.append($("<option></option>").val("magnet").text("magnet"));
-                    model.append($("<option></option>").val("plug").text("plug"));
-                    model.append($("<option></option>").val("gateway").text("gateway"));
-                    model.append($("<option></option>").val("switch").text("switch"));
-                    model.append($("<option></option>").val("motion").text("motion"));
-
-                    sid.val(device.sid);
+                    sid.typedInput('value', device.sid);
+                    sid.typedInput('type', device.model);
                     desc.val(device.desc);
-                    model.val(device.model);
+                },
+                resize: function() {
+                    console.log("got resized");
 
                 },
                 removeItem: function(opt) {
@@ -50,7 +55,8 @@
                 var device = this.deviceList[i];
                 $("#node-config-input-devices").editableList('addItem', device);
             }
-
+            var listHeight = $("#node-config-input-devices").editableList('items').size() * 51 + 50;
+            $("#node-config-input-devices").editableList('height', listHeight);
         },
         oneditsave: function() {
             var devices = $("#node-config-input-devices").editableList('items');
@@ -60,7 +66,8 @@
                 var deviceElement = $(this);
                 var sid = deviceElement.find("#node-config-input-sid-"+i).val();
                 var desc = deviceElement.find("#node-config-input-desc-"+i).val();
-                var model = deviceElement.find("#node-config-input-model-"+i).val();
+//                var model = deviceElement.find("#node-config-input-model-"+i).val();
+                var model = deviceElement.find("#node-config-input-sid-"+i).typedInput('type').val();
                 var d = {};
                 d['sid']=sid;
                 d['desc']=desc;
