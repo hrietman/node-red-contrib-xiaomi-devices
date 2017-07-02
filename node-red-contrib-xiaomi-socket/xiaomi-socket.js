@@ -16,7 +16,7 @@ module.exports = function(RED) {
         var currentToken = "";
         var state = "";
 
-        node.status({fill:"yellow", shape:"ring", text:"no key"});
+        node.status({fill:"yellow", shape:"ring", text:"waiting for key"});
 
         if (this.gateway) {
             node.on('input', function(msg) {
@@ -61,7 +61,7 @@ module.exports = function(RED) {
                     var data = JSON.parse(payload.data)
 
                     if (currentToken == "") {
-                        node.status({fill:"yellow", shape:"dot", text:"no key"});
+                        node.status({fill:"yellow", shape:"ring", text:"waiting for key"});
                     } else if (data.status && data.status == "on") {
                         node.status({fill:"green", shape:"dot", text:"on"});
                         state = "on";

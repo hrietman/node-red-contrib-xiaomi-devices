@@ -1,22 +1,22 @@
 <script type="text/javascript">
-    RED.nodes.registerType('xiaomi-magnet', {
+    RED.nodes.registerType('xiaomi-motion', {
         category: 'xiaomi',
         color: '#3FADB5',
         defaults: {
             gateway: {value:"", type:"xiaomi-configurator"},
             name: {value: ""},
             sid: {value: "", required: true},
-            openmsg: {value: ""},
-            closemsg: {value: ""},
+            motionmsg: {value: ""},
+            nomotionmsg: {value: ""},
             output: {value: "0"}
         },
         inputs: 1,
-        outputs: 1,
+        outputs: 2,
         outputLabels: ["Status"],
-        paletteLabel: "contact",
-        icon: "door-icon.png",
+        paletteLabel: "motion",
+        icon: "motion-icon.png",
         label: function () {
-            return this.name || "xiaomi-magnet";
+            return this.name || "xiaomi-motion";
         },
         oneditprepare: function() {
             var node = this;
@@ -40,7 +40,7 @@
 
             for (key in configNode.deviceList) {
                 var device = configNode.deviceList[key];
-                if (device.model === "magnet") {
+                if (device.model === "motion") {
                     $('#node-input-sid').append('<option value="' + device.sid + '">' + device.desc + '</option>');
                 }
             }
@@ -53,7 +53,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="xiaomi-magnet">
+<script type="text/x-red" data-template-name="xiaomi-motion">
     <div class="form-row">
         <label for="node-input-gateway"><i class="icon-tag"></i> Gateway</label>
         <input type="text" id="node-input-gateway" placeholder="xiaomi gateway">
@@ -75,15 +75,15 @@
         </select>
     </div>
     <div class="form-row node-input-msg">
-        <label for="node-input-openmsg"><i class="fa fa-circle-o-notch"></i> Open msg</label>
-        <input type="text" id="node-input-openmsg">
+        <label for="node-input-motionmsg"><i class="fa fa-rss"></i> Motion msg</label>
+        <input type="text" id="node-input-motionmsg">
     </div>
     <div class="form-row node-input-msg">
-        <label for="node-input-closemsg"><i class="fa fa-circle-o"></i> Close msg</label>
-        <input type="text" id="node-input-closemsg">
+        <label for="node-input-nomotionmsg"><i class="fa fa-circle"></i> No motion msg</label>
+        <input type="text" id="node-input-nomotionmsg">
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="xiaomi-magnet">
-    <p>A simple node that converts the message payloads into a ON or OFF message</p>
+<script type="text/x-red" data-help-name="xiaomi-motion">
+    <p>A simple node that converts the message payloads into a message</p>
 </script>
