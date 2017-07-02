@@ -1,22 +1,22 @@
 <script type="text/javascript">
-    RED.nodes.registerType('xiaomi-plug', {
+    RED.nodes.registerType('xiaomi-switch', {
         category: 'xiaomi',
         color: '#3FADB5',
         defaults: {
             gateway: {value:"", type:"xiaomi-configurator"},
             name: {value: ""},
             sid: {value: "", required: true},
-            onmsg: {value: ""},
-            offmsg: {value: ""},
+            outmsg: {value: "{{click}}"},
+            outmsgdbcl: {value: "{{double_click}}"},
             output: {value: "0"}
         },
         inputs: 1,
         outputs: 2,
-        outputLabels: ["Status","Control"],
-        paletteLabel: "plug (zigbee)",
-        icon: "outlet-icon.png",
+        outputLabels: ["Single-click", "Double-click"],
+        paletteLabel: "switch",
+        icon: "light-icon.png",
         label: function () {
-            return this.name || "xiaomi-plug";
+            return this.name || "xiaomi-switch";
         },
         oneditprepare: function() {
             var node = this;
@@ -34,13 +34,16 @@
                 }
             });
 
+            $(".node-input-msg").hide();
+            $("#node-input-output").val(node.output);
+
             $("#node-input-gateway").change(function () {
 
             });
 
             for (key in configNode.deviceList) {
                 var device = configNode.deviceList[key];
-                if (device.model === "plug") {
+                if (device.model === "switch") {
                     $('#node-input-sid').append('<option value="' + device.sid + '">' + device.desc + '</option>');
                 }
             }
@@ -53,7 +56,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="xiaomi-plug">
+<script type="text/x-red" data-template-name="xiaomi-switch">
     <div class="form-row">
         <label for="node-input-gateway"><i class="icon-tag"></i> Gateway</label>
         <input type="text" id="node-input-gateway" placeholder="xiaomi gateway">
@@ -75,15 +78,16 @@
         </select>
     </div>
     <div class="form-row node-input-msg">
-        <label for="node-input-onmsg"><i class="fa fa-power-off"></i> On msg</label>
-        <input type="text" id="node-input-onmsg">
+        <label for="node-input-outmsg"><i class="fa fa-hand-pointer-o"></i> Single-click</label>
+        <input type="text" id="node-input-outmsg">
     </div>
     <div class="form-row node-input-msg">
-        <label for="node-input-offmsg"><i class="fa fa-power-off"></i> Off msg</label>
-        <input type="text" id="node-input-offmsg">
+        <label for="node-input-outmsgdbcl"><i class="fa fa-hand-peace-o"></i> Double-click</label>
+        <input type="text" id="node-input-outmsgdbcl">
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="xiaomi-plug">
-    <p>A simple node that converts the message payloads into a ON or OFF message</p>
+<script type="text/x-red" data-help-name="xiaomi-ht">
+    <p>A simple node that converts the message payloads from a switch into an output message</p>
+
 </script>

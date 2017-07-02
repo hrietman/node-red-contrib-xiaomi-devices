@@ -1,22 +1,22 @@
 <script type="text/javascript">
-    RED.nodes.registerType('xiaomi-plug', {
+    RED.nodes.registerType('xiaomi-magnet', {
         category: 'xiaomi',
         color: '#3FADB5',
         defaults: {
             gateway: {value:"", type:"xiaomi-configurator"},
             name: {value: ""},
             sid: {value: "", required: true},
-            onmsg: {value: ""},
-            offmsg: {value: ""},
+            openmsg: {value: ""},
+            closemsg: {value: ""},
             output: {value: "0"}
         },
         inputs: 1,
-        outputs: 2,
-        outputLabels: ["Status","Control"],
-        paletteLabel: "plug (zigbee)",
-        icon: "outlet-icon.png",
+        outputs: 1,
+        outputLabels: ["Status"],
+        paletteLabel: "contact",
+        icon: "door-icon.png",
         label: function () {
-            return this.name || "xiaomi-plug";
+            return this.name || "xiaomi-magnet";
         },
         oneditprepare: function() {
             var node = this;
@@ -40,7 +40,7 @@
 
             for (key in configNode.deviceList) {
                 var device = configNode.deviceList[key];
-                if (device.model === "plug") {
+                if (device.model === "magnet") {
                     $('#node-input-sid').append('<option value="' + device.sid + '">' + device.desc + '</option>');
                 }
             }
@@ -53,7 +53,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="xiaomi-plug">
+<script type="text/x-red" data-template-name="xiaomi-magnet">
     <div class="form-row">
         <label for="node-input-gateway"><i class="icon-tag"></i> Gateway</label>
         <input type="text" id="node-input-gateway" placeholder="xiaomi gateway">
@@ -75,15 +75,15 @@
         </select>
     </div>
     <div class="form-row node-input-msg">
-        <label for="node-input-onmsg"><i class="fa fa-power-off"></i> On msg</label>
-        <input type="text" id="node-input-onmsg">
+        <label for="node-input-openmsg"><i class="fa fa-power-off"></i> Open msg</label>
+        <input type="text" id="node-input-openmsg">
     </div>
     <div class="form-row node-input-msg">
-        <label for="node-input-offmsg"><i class="fa fa-power-off"></i> Off msg</label>
-        <input type="text" id="node-input-offmsg">
+        <label for="node-input-closemsg"><i class="fa fa-power-off"></i> Close msg</label>
+        <input type="text" id="node-input-closemsg">
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="xiaomi-plug">
+<script type="text/x-red" data-help-name="xiaomi-magnet">
     <p>A simple node that converts the message payloads into a ON or OFF message</p>
 </script>

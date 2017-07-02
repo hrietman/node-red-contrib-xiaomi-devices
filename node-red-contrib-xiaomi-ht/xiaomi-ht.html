@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('xiaomi-ht', {
-        category: 'function',
-        color: '#a6bbcf',
+        category: 'xiaomi',
+        color: '#3FADB5',
         defaults: {
             gateway: {value:"", type:"xiaomi-configurator"},
             name: {value: ""},
@@ -13,6 +13,7 @@
         inputs: 1,
         outputs: 2,
         outputLabels: ["Temperature","Humidity"],
+        paletteLabel: "sensor HT",
         icon: "thermometer-icon.png",
         label: function () {
             return this.name || "xiaomi-ht";
