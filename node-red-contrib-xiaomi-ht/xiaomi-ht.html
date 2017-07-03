@@ -92,6 +92,42 @@
 </script>
 
 <script type="text/x-red" data-help-name="xiaomi-ht">
-    <p>A simple node that converts the message payloads into a temperature and a humidity message for the MQTT homebridge plugin</p>
+    <p>The Xiaomi Humidity & Temperature sensor node</p>
+
+    <dl class="message-properties">
+        <dt class="mandatory">Gateway</dt>
+        <dd>The Gateway configuration node this sensor is attached.</dd>
+        <dt class="optional">Name</dt>
+        <dd>A descriptive name for this sensor.</dd>
+        <dt class="mandatory">Device</dt>
+        <dd>The device to associate this node with. This device is configured in the Gateway configuration.</dd>
+        <dt class="mandatory">Output</dt>
+        <dd>Three output types are supported:</dd>
+        <ul>
+            <li>Full data</li>
+            <li>Just values</li>
+            <li>Template</li>
+        </ul>
+        <dt class="mandatory">Full data</dt>
+        <dd>Passes the complete object received from the gateway. Use this if you need the raw data.</dd>
+        <dt class="mandatory">Just values</dt>
+        <dd>Only passes the values for humidity and temperature.</dd>
+        <dt class="mandatory">Template</dt>
+        <dd>Use your own template to pass the values on. The template can contain <a href="http://mustache.github.io/mustache.5.html">mustache-style</a> tags.
+        Any property from the data section of the full object can be used.</dd>
+    </dl>
+    <p>Sample message:</p>
+    <p><pre>
+    {
+        cmd: "read_ack"
+        model: "sensor_ht"
+        sid: "158d00010b7f1b"
+        short_id: 8451
+        data: "{
+                    "voltage":3005,
+                    "temperature":"2325",
+                    "humidity":"5699"
+               }"
+    }</pre></p>
 
 </script>

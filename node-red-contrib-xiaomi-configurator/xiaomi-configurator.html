@@ -94,5 +94,25 @@
 </script>
 
 <script type="text/x-red" data-help-name="xiaomi-configurator">
-    <p>Configuration node for a xiaomi gateway device</p>
+    <p>Device configuration for Xiaomi nodes.</p>
+    <h3>Details</h3>
+    <p>This configuration node is used by the Xiaomi device nodes. Here you can add
+    devices with their device-id (SID), type and a description.</p>
+    <p>At the moment the following devices are supported:
+    <lu>
+        <li>Humidity & Temperature sensor [sensor ht]</li>
+        <li>Body motion sensor [motion]</li>
+        <li>Magnet contact sensor [contact]</li>
+        <li>Wall socket plug (zigbee) [plug]</li>
+        <li>Push button [switch]</li>
+    </lu>
+    </p>
+    <p>To be able to receive messages from the Xiaomi gateway, you need to set the gateway
+    in developer mode. Once in developer mode, the gateway sends JSON messages over the network as
+    UDP packages. On the internet their are a lot of guides on how to put the gateway in developer mode.</p>
+    <p>If you want to use the wall sockets, you need to set the key from the gateway. The key can be
+    retrieved via the Xiaomi Home App when in developer mode. Enter the key here and it is used
+    together with the token from the gateway's heartbeat message to recalculate the key to switch
+    the plug. If you do not specify a key, the plug-node can not be used.</p>
+
 </script>

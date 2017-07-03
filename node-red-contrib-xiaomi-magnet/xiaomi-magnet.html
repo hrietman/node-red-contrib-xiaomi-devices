@@ -85,5 +85,41 @@
 </script>
 
 <script type="text/x-red" data-help-name="xiaomi-magnet">
-    <p>A simple node that converts the message payloads into a ON or OFF message</p>
+    <p>The Xiaomi contact sensor node</p>
+
+    <dl class="message-properties">
+        <dt class="mandatory">Gateway</dt>
+        <dd>The Gateway configuration node this sensor is attached.</dd>
+        <dt class="optional">Name</dt>
+        <dd>A descriptive name for this sensor.</dd>
+        <dt class="mandatory">Device</dt>
+        <dd>The device to associate this node with. This device is configured in the Gateway configuration.</dd>
+        <dt class="mandatory">Output</dt>
+        <dd>Three output types are supported:</dd>
+        <ul>
+            <li>Full data</li>
+            <li>Just values</li>
+            <li>Template</li>
+        </ul>
+        <dt class="mandatory">Full data</dt>
+        <dd>Passes the complete object received from the gateway. Use this if you need the raw data.</dd>
+        <dt class="mandatory">Just values</dt>
+        <dd>Only passes the values <code>open</code> or <code>close</code></dd>
+        <dt class="mandatory">Template</dt>
+        <dd>Use your own template to pass the values on. The template can contain <a href="http://mustache.github.io/mustache.5.html">mustache-style</a> tags.
+        Any property from the data section of the full object can be used.</dd>
+    </dl>
+    <p>Sample message:</p>
+    <p><pre>
+    {
+        cmd: "read_ack"
+        model: "magnet"
+        sid: "158d000112fb5d"
+        short_id: 50301
+        data: "{
+                    "voltage":3015,
+                    "status":"close"
+               }"
+    }</pre></p>
+
 </script>
