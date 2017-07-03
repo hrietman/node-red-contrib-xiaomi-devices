@@ -27,3 +27,4 @@ npm install node-red-contrib-xiaomi-devices
 
 Below a screenshot of an example use of all nodes.
 
+![Xiaomi devices example in node-red](https://github.com/hrietman/node-red-contrib-xiaomi-devices/blob/master/xiaomi-devices-overview.png)
