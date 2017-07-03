@@ -1,22 +1,16 @@
 {
-  "name": "node-red",
+  "name": "node-red-contrib-xiaomi-devices",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "A set of nodes to control some of the popular Xiaomi sensors which are connected to the Xiaomi Gateway.",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/h-rietman/xiaomi-devices-node-red.git"
   },
-  "keywords": [],
-  "author": "Harald Rietman <harald.rietman@portofrotterdam.com> (http://blog.example.com)",
-  "license": "ISC",
+  "keywords": [Xiaomi],
+  "author": "Harald Rietman <h.rietman@gmail.com>",
   "bugs": {
     "url": "https://gitlab.com/h-rietman/xiaomi-devices-node-red/issues"
   },
-  "homepage": "https://gitlab.com/h-rietman/xiaomi-devices-node-red#README",
   "dependencies": {
     "cryptojs": "^2.5.3",
     "mustache": "^2.3.0"

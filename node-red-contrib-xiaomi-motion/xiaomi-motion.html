@@ -87,28 +87,49 @@
 <script type="text/x-red" data-help-name="xiaomi-motion">
     <p>The Xiaomi body motion sensor node</p>
 
+    <h3>Inputs</h3>
     <dl class="message-properties">
-        <dt class="mandatory">Gateway</dt>
-        <dd>The Gateway configuration node this sensor is attached.</dd>
-        <dt class="optional">Name</dt>
-        <dd>A descriptive name for this sensor.</dd>
-        <dt class="mandatory">Device</dt>
-        <dd>The device to associate this node with. This device is configured in the Gateway configuration.</dd>
-        <dt class="mandatory">Output</dt>
-        <dd>Three output types are supported:</dd>
+        <dt>payload
+            <span class="property-type">json</span>
+        </dt>
+        <dd>Gateway <code>motion</code> message of type <code>read_ack</code>, <code>heartbeat</code> or <code>report</code></dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Motion output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">string | json</span></dt>
+                <dd>raw data, value or template.</dd>
+            </dl>
+        </li>
+        <li>Duration output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">json</span></dt>
+                <dd>raw data</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>The incoming json message is parsed if the type model is <code>motion</code> and
+     the <code>sid</code> matches the configured value for this device.</p>
+    <p>Three output types are supported for output 1:
         <ul>
             <li>Full data</li>
             <li>Just values</li>
             <li>Template</li>
         </ul>
-        <dt class="mandatory">Full data</dt>
-        <dd>Passes the complete object received from the gateway. Use this if you need the raw data.</dd>
-        <dt class="mandatory">Just values</dt>
-        <dd>Only passes the values <code>motion</code> or <code>no_motion</code>. In case of <code>no_motion</code> also the duration is passed on the second output.</dd>
-        <dt class="mandatory">Template</dt>
-        <dd>Use your own template to pass the values on. The template can contain <a href="http://mustache.github.io/mustache.5.html">mustache-style</a> tags.
-        Any property from the data section of the full object can be used.</dd>
-    </dl>
+    </p>
+
+    <h4>Full data</h4>
+    <p>Passes the complete json object received from the gateway. Use this if you need the raw data.</p>
+    <h4>Just values</h4>
+    <p>Only passes the values <code>motion</code> or <code>no_motion</code>. In case of <code>no_motion</code> also the duration object is passed on output 2.</p>
+    <h4>Template</h4>
+    <p>Use your own template to pass the values on. The template can contain <a href="http://mustache.github.io/mustache.5.html">mustache-style</a> tags.
+        Any property from the data section of the full object can be used.</p>
+
     <p>Sample message:</p>
     <p><pre>
     {

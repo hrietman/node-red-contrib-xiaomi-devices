@@ -18,7 +18,7 @@ module.exports = function(RED) {
 
         node.status({fill:"yellow", shape:"ring", text:"waiting for key"});
 
-        if (this.gateway) {
+        if (this.gateway && this.key != "") {
             node.on('input', function(msg) {
                 // var payload = JSON.parse(msg);
                 var payload = msg.payload;
@@ -98,6 +98,9 @@ module.exports = function(RED) {
 
         } else {
             // no gateway configured
+            if (this.key == "") {
+                node.status({fill:"red", shape:"dot", text:"no key configured"});
+            }
         }
 
     }

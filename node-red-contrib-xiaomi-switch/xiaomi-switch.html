@@ -87,7 +87,62 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="xiaomi-ht">
-    <p>A simple node that converts the message payloads from a switch into an output message</p>
+<script type="text/x-red" data-help-name="xiaomi-switch">
+    <p>The Xiaomi Switch node</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">json</span>
+        </dt>
+        <dd>Gateway <code>switch</code> message of type <code>read_ack</code>, <code>heartbeat</code> or <code>report</code></dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Single click output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">string | json</span></dt>
+                <dd>raw data, value or template.</dd>
+            </dl>
+        </li>
+        <li>Double click output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">string | json</span></dt>
+                <dd>raw data, value or template.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>The incoming json message is parsed if the type model is <code>switch</code> and
+     the <code>sid</code> matches the configured value for this device.</p>
+    <p>Three output types are supported:
+        <ul>
+            <li>Full data</li>
+            <li>Just values</li>
+            <li>Template</li>
+        </ul>
+    </p>
+
+    <h4>Full data</h4>
+    <p>Passes the complete json object received from the gateway on output 1. Use this if you need the raw data.</p>
+    <h4>Just values</h4>
+    <p>Only passes the string values <code>single_click</code> on output 1 and <code>double_click</code> on output 2.</p>
+    <h4>Template</h4>
+    <p>Use your own template to pass the values on. The template can contain <a href="http://mustache.github.io/mustache.5.html">mustache-style</a> tags.
+        Any property from the data section of the full object can be used.</p>
+
+    <p>Sample message:</p>
+    <p><pre>
+    {
+        cmd: "report"
+        model: "switch"
+        sid: "158d000128b124"
+        short_id: 56773
+        data: "{
+                    "status":"click"
+               }"
+    }</pre></p>
 
 </script>

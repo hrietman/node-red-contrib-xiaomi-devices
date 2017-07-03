@@ -85,34 +85,58 @@
 </script>
 
 <script type="text/x-red" data-help-name="xiaomi-plug">
-    <p>The Xiaomi plug (zigbee) sensor node</p>
+    <p>The Xiaomi plug (zigbee) node</p>
+
     <p>This is the plug (socket) version which is attached to a Xiaomi gateway. The Wifi version is not yet supported.</p>
     <p>To switch an output you need to specify the key of the gateway in the gateway configuration; without the key
-     no output can be switched. To retrieve the gateway key consult the Xiaomi Mi Home App.</p>
-     <p>On the input you can send <code>on</code> to switch the plug on. To turn it off just send <code>off</code></p>
-     <p>Output 1 reports the status, output 2 is the write command for the plug.</p>
+    no output can be switched. To retrieve the gateway key consult the Xiaomi Mi Home App.</p>
+
+    <h3>Inputs</h3>
     <dl class="message-properties">
-        <dt class="mandatory">Gateway</dt>
-        <dd>The Gateway configuration node this sensor is attached.</dd>
-        <dt class="optional">Name</dt>
-        <dd>A descriptive name for this sensor.</dd>
-        <dt class="mandatory">Device</dt>
-        <dd>The device to associate this node with. This device is configured in the Gateway configuration.</dd>
-        <dt class="mandatory">Output</dt>
-        <dd>Three output types are supported:</dd>
+        <dt>payload
+            <span class="property-type">string | json</span>
+        </dt>
+        <dd>Gateway <code>plug</code> message of type <code>read_ack</code>, <code>heartbeat</code> or <code>report</code>. Or <code>on</code> or <code>off</code>.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Status output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">string | json</span></dt>
+                <dd>raw data, value or template.</dd>
+            </dl>
+        </li>
+        <li>Control output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">json</span></dt>
+                <dd>Gateway <code>write_cmd</code> to switch the output on or off.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>The incoming json message is parsed if the type model is <code>plug</code> and
+     the <code>sid</code> matches the configured value for this device.</p>
+    <p>On the input you can send the string <code>on</code> to switch the plug on. To turn it off just send the string <code>off</code></p>
+    <p>Output 1 reports the status, output 2 is the write command for the plug.</p>
+
+    <p>Three output types are supported:
         <ul>
             <li>Full data</li>
             <li>Just values</li>
             <li>Template</li>
         </ul>
-        <dt class="mandatory">Full data</dt>
-        <dd>Passes the complete object received from the gateway. Use this if you need the raw data.</dd>
-        <dt class="mandatory">Just values</dt>
-        <dd>Only passes the values <code>on</code> or <code>off</code>.</dd>
-        <dt class="mandatory">Template</dt>
-        <dd>Use your own template to pass the values on. The template can contain <a href="http://mustache.github.io/mustache.5.html">mustache-style</a> tags.
-        Any property from the data section of the full object can be used.</dd>
-    </dl>
+    </p>
+
+    <h4>Full data</h4>
+    <p>Passes the complete json object received from the gateway on output 1. Use this if you need the raw data.</p>
+    <h4>Just values</h4>
+    <p>Only passes the values <code>on</code> or <code>off</code> on output 1.</p>
+    <h4>Template</h4>
+    <p>Use your own template to pass the values on. The template can contain <a href="http://mustache.github.io/mustache.5.html">mustache-style</a> tags.
+        Any property from the data section of the full object can be used.</p>
+
     <p>Sample message:</p>
     <p><pre>
     {
