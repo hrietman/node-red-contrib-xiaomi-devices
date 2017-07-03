@@ -4,12 +4,12 @@
   "description": "A set of nodes to control some of the popular Xiaomi sensors which are connected to the Xiaomi Gateway.",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/h-rietman/xiaomi-devices-node-red.git"
+    "url": "git+ssh://git@github.com:hrietman/node-red-contrib-xiaomi-devices.git"
   },
   "keywords": [Xiaomi],
   "author": "Harald Rietman <h.rietman@gmail.com>",
   "bugs": {
-    "url": "https://gitlab.com/h-rietman/xiaomi-devices-node-red/issues"
+    "url": "https://github.com/hrietman/node-red-contrib-xiaomi-devices/issues"
   },
   "dependencies": {
     "cryptojs": "^2.5.3",
