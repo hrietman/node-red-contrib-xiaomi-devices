@@ -15,7 +15,7 @@
       "xiaomi-socket": "node-red-contrib-xiaomi-socket/xiaomi-socket.js",
       "xiaomi-switch": "node-red-contrib-xiaomi-switch/xiaomi-switch.js"
     }
-  }
+  },
   "author": "Harald Rietman",
   "bugs": {
     "url": "https://github.com/hrietman/node-red-contrib-xiaomi-devices/issues"
