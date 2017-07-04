@@ -14,6 +14,7 @@
       "xiaomi-motion": "node-red-contrib-xiaomi-motion/xiaomi-motion.js",
       "xiaomi-socket": "node-red-contrib-xiaomi-socket/xiaomi-socket.js",
       "xiaomi-switch": "node-red-contrib-xiaomi-switch/xiaomi-switch.js"
+      "xiaomi-configurator": "node-red-contrib-xiaomi-switch/xiaomi-configurator.js"
     }
   },
   "author": "Harald Rietman",
