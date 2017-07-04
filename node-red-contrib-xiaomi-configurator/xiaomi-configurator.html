@@ -40,8 +40,6 @@
                     desc.val(device.desc);
                 },
                 resize: function() {
-                    console.log("got resized");
-
                 },
                 removeItem: function(opt) {
                 },
@@ -66,8 +64,7 @@
                 var deviceElement = $(this);
                 var sid = deviceElement.find("#node-config-input-sid-"+i).val();
                 var desc = deviceElement.find("#node-config-input-desc-"+i).val();
-//                var model = deviceElement.find("#node-config-input-model-"+i).val();
-                var model = deviceElement.find("#node-config-input-sid-"+i).typedInput('type').val();
+                var model = deviceElement.find("#node-config-input-sid-"+i).typedInput('type');
                 var d = {};
                 d['sid']=sid;
                 d['desc']=desc;
