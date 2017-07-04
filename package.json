@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com:hrietman/node-red-contrib-xiaomi-devices.git"
   },
-  "keywords": [Xiaomi],
+  "keywords": ["Xiaomi"],
   "author": "Harald Rietman <h.rietman@gmail.com>",
   "bugs": {
     "url": "https://github.com/hrietman/node-red-contrib-xiaomi-devices/issues"
