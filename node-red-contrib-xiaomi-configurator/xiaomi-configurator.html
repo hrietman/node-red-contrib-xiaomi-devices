@@ -26,14 +26,14 @@
                     var row = $('<div/>').appendTo(container);
 
                     $('<label/>',{for:"node-config-input-sid-"+i, style:"margin-left: 3px; width: 15px;vertical-align:middle"}).appendTo(row);
-                    var sid = $('<input/>',{id:"node-config-input-sid-"+i,type:"text", style:"width:auto;vertical-align:top"}).appendTo(row);
+                    var sid = $('<input/>',{id:"node-config-input-sid-"+i,type:"text", placeholder:"SID", style:"width:auto;vertical-align:top"}).appendTo(row);
                     sid.typedInput({
                         default: 'sensor_ht',
                         types: [tw_sensor_ht, tw_magnet, tw_motion, tw_plug, tw_switch]
                     });
 
                     $('<label/>',{for:"node-config-input-desc-"+i, style:"margin-left: 7px; width: 20px;vertical-align:middle"}).html('<i class="fa fa-pencil-square-o"></i>').appendTo(row);
-                    var desc = $('<input/>',{id:"node-config-input-desc-"+i, type:"text", style:"width:auto;vertical-align:top"}).appendTo(row);
+                    var desc = $('<input/>',{id:"node-config-input-desc-"+i, type:"text", placeholder:"description", style:"width:auto;vertical-align:top"}).appendTo(row);
 
                     sid.typedInput('value', device.sid);
                     sid.typedInput('type', device.model);
@@ -82,7 +82,7 @@
         <input type="text" id="node-config-input-name" placeholder="Name">
     </div>
         <div class="form-row">
-        <label for="node-config-input-key"><i class="fa fa-ticket"></i> Key</label>
+        <label for="node-config-input-key"><i class="fa fa-ticket"></i> Key/Password</label>
         <input type="text" id="node-config-input-key" placeholder="Key">
     </div>
     <div class="form-row node-config-input-devices">
