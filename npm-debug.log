@@ -1,0 +1,115 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Development/codecentric/node-red',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/h_rietman/.npm/node-red-contrib-xiaomi-devices/1.0.7/package.tgz not in flight; packing
+9 verbose correctMkdir /Users/h_rietman/.npm correctMkdir not in flight; initializing
+10 info lifecycle node-red-contrib-xiaomi-devices@1.0.7~prepublish: node-red-contrib-xiaomi-devices@1.0.7
+11 silly lifecycle node-red-contrib-xiaomi-devices@1.0.7~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/Users/h_rietman/.npm/node-red-contrib-xiaomi-devices/1.0.7/package.tgz',
+12 verbose tar pack   '/Development/codecentric/node-red' ]
+13 verbose tarball /Users/h_rietman/.npm/node-red-contrib-xiaomi-devices/1.0.7/package.tgz
+14 verbose folder /Development/codecentric/node-red
+15 verbose addLocalTarball adding from inside cache /Users/h_rietman/.npm/node-red-contrib-xiaomi-devices/1.0.7/package.tgz
+16 verbose correctMkdir /Users/h_rietman/.npm correctMkdir not in flight; initializing
+17 silly cache afterAdd node-red-contrib-xiaomi-devices@1.0.7
+18 verbose afterAdd /Users/h_rietman/.npm/node-red-contrib-xiaomi-devices/1.0.7/package/package.json not in flight; writing
+19 verbose correctMkdir /Users/h_rietman/.npm correctMkdir not in flight; initializing
+20 verbose afterAdd /Users/h_rietman/.npm/node-red-contrib-xiaomi-devices/1.0.7/package/package.json written
+21 silly publish { name: 'node-red-contrib-xiaomi-devices',
+21 silly publish   version: '1.0.7',
+21 silly publish   description: 'A set of nodes to control some of the popular Xiaomi sensors which are connected to the Xiaomi Gateway.',
+21 silly publish   repository:
+21 silly publish    { type: 'git',
+21 silly publish      url: 'git+ssh://git@github.com/hrietman/node-red-contrib-xiaomi-devices.git' },
+21 silly publish   license: 'MIT',
+21 silly publish   keywords: [ 'Xiaomi', 'node-red' ],
+21 silly publish   'node-red':
+21 silly publish    { nodes:
+21 silly publish       { 'xiaomi-ht': 'node-red-contrib-xiaomi-ht/xiaomi-ht.js',
+21 silly publish         'xiaomi-magnet': 'node-red-contrib-xiaomi-magnet/xiaomi-magnet.js',
+21 silly publish         'xiaomi-motion': 'node-red-contrib-xiaomi-motion/xiaomi-motion.js',
+21 silly publish         'xiaomi-socket': 'node-red-contrib-xiaomi-socket/xiaomi-socket.js',
+21 silly publish         'xiaomi-switch': 'node-red-contrib-xiaomi-switch/xiaomi-switch.js',
+21 silly publish         'xiaomi-configurator': 'node-red-contrib-xiaomi-configurator/xiaomi-configurator.js' } },
+21 silly publish   author: { name: 'Harald Rietman' },
+21 silly publish   bugs: { url: 'https://github.com/hrietman/node-red-contrib-xiaomi-devices/issues' },
+21 silly publish   dependencies: { cryptojs: '^2.5.3', mustache: '^2.3.0' },
+21 silly publish   readme: '# node-red-contrib-xiaomi-devices\n\nThis module contains the following nodes to provide easy integration of the Xiaomi devices into node-red.\n\nThe following devices are currently supported:\n\n* Temperature/humidity sensor\n* Magnet switch\n* Button switch\n* Motion sensor\n* Power plug (zigbee)\n\n## Preperation\nTo receive the gateway json messages on your network you need to enable the developer mode, aka LAN mode in the gateway.\n\nA UDP input node is needed to receive the json messages. An UDP output node to send command\'s to the gateway.\n\n\n## Install\n\n```\ncd ~\\.node-red\nnpm install node-red-contrib-xiaomi-devices\n```\n\n## Usage\n\nFrom the Xiaomi configurator screen add your different devices by selecting the type of device and a readable description. The readable discription is used on the different edit screen of the nodes to easily select the device you associate to the node.\n\nThe Xiaomi configurator screen with ease of use to configure your different devices.\n\n![Xiaomi configurator in node-red](https://raw.githubusercontent.com/hrietman/node-red-contrib-xiaomi-devices/master/xiaomi-configurator.png)\n\nTip: use the configurator from the side-panel (hamburger menu, configuration nodes) to manage your devices. Node-red doesn\'t update underlying edit screens if the configuration panel is opened / closed from the edit node screen. (If you do, you need to first close the edit node screen and reopen it by double-clicking the node you want to edit the properties for.)\n\nTo receive/send json UDP messages from/to the gateway you need to enable the local LAN mode on the gateway. To receive the json UDP messages in node-red you need to add an udp-node with the correct configuration:\n\n```\nListen for: multicast messages\nGroup: 224.0.0.50\nLocal ip: <empty>\nOn port: 9898 ipv4\nOutput: String\n```\n\nIf you want to sent messages to the gateway you need to add an UDP sender, here an example configuration:\n\n```\nSend a: UDP message to port: 9898\nAddress: <ip_of_your_gateway> ipv4\n```\nThis configuration worked for me however I have seen people using different configuration to make UDP work.\n\nHere an example of how to use the different nodes.\n\n![Xiaomi devices example in node-red](https://raw.githubusercontent.com/hrietman/node-red-contrib-xiaomi-devices/master/xiaomi-devices-overview.png)\n\n\n## Roadmap\n* Support for other devices like the smart-socket WiFi\n* Import (new) devices directly from the gateway\n',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: '4ab8b287fa75ee7feedae0a1560ab5a82251f9d3',
+21 silly publish   homepage: 'https://github.com/hrietman/node-red-contrib-xiaomi-devices#readme',
+21 silly publish   _id: 'node-red-contrib-xiaomi-devices@1.0.7',
+21 silly publish   scripts: {},
+21 silly publish   _shasum: 'af9d2e2e3453d5bd7a838ac0cce542f135236af3',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name node-red-contrib-xiaomi-devices
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry https://registry.npmjs.org/
+26 silly mapToRegistry data Result {
+26 silly mapToRegistry   raw: 'node-red-contrib-xiaomi-devices',
+26 silly mapToRegistry   scope: null,
+26 silly mapToRegistry   escapedName: 'node-red-contrib-xiaomi-devices',
+26 silly mapToRegistry   name: 'node-red-contrib-xiaomi-devices',
+26 silly mapToRegistry   rawSpec: '',
+26 silly mapToRegistry   spec: 'latest',
+26 silly mapToRegistry   type: 'tag' }
+27 silly mapToRegistry uri https://registry.npmjs.org/node-red-contrib-xiaomi-devices
+28 verbose publish registryBase https://registry.npmjs.org/
+29 silly publish uploading /Users/h_rietman/.npm/node-red-contrib-xiaomi-devices/1.0.7/package.tgz
+30 verbose request uri https://registry.npmjs.org/node-red-contrib-xiaomi-devices
+31 verbose request sending authorization for write operation
+32 info attempt registry request try #1 at 7:14:21 AM
+33 verbose request using bearer token for auth
+34 verbose request id 066935c0165bbfac
+35 http request PUT https://registry.npmjs.org/node-red-contrib-xiaomi-devices
+36 http 403 https://registry.npmjs.org/node-red-contrib-xiaomi-devices
+37 verbose headers { 'content-type': 'application/json',
+37 verbose headers   'cache-control': 'max-age=300',
+37 verbose headers   'content-length': '95',
+37 verbose headers   'accept-ranges': 'bytes',
+37 verbose headers   date: 'Tue, 11 Jul 2017 05:14:18 GMT',
+37 verbose headers   via: '1.1 varnish',
+37 verbose headers   connection: 'keep-alive',
+37 verbose headers   'x-served-by': 'cache-ams4451-AMS',
+37 verbose headers   'x-cache': 'MISS',
+37 verbose headers   'x-cache-hits': '0',
+37 verbose headers   'x-timer': 'S1499750057.125544,VS0,VE1806',
+37 verbose headers   vary: 'Accept-Encoding, Accept' }
+38 verbose request invalidating /Users/h_rietman/.npm/registry.npmjs.org/node-red-contrib-xiaomi-devices on PUT
+39 error publish Failed PUT 403
+40 verbose stack Error: "You cannot publish over the previously published version 1.0.7." : node-red-contrib-xiaomi-devices
+40 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+40 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+40 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+40 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:187:22)
+40 verbose stack     at emitTwo (events.js:106:13)
+40 verbose stack     at Request.emit (events.js:191:7)
+40 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1048:10)
+40 verbose stack     at emitOne (events.js:96:13)
+40 verbose stack     at Request.emit (events.js:188:7)
+40 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:969:12)
+41 verbose statusCode 403
+42 verbose pkgid node-red-contrib-xiaomi-devices
+43 verbose cwd /Development/codecentric/node-red
+44 error Darwin 15.6.0
+45 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+46 error node v6.11.0
+47 error npm  v3.10.10
+48 error code E403
+49 error "You cannot publish over the previously published version 1.0.7." : node-red-contrib-xiaomi-devices
+50 error If you need help, you may report this error at:
+50 error     <https://github.com/npm/npm/issues>
+51 verbose exit [ 1, true ]
