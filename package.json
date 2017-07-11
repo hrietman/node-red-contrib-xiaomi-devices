@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-xiaomi-devices",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A set of nodes to control some of the popular Xiaomi sensors which are connected to the Xiaomi Gateway.",
   "repository": {
     "type": "git",
@@ -13,8 +13,9 @@
       "xiaomi-ht": "node-red-contrib-xiaomi-ht/xiaomi-ht.js",
       "xiaomi-magnet": "node-red-contrib-xiaomi-magnet/xiaomi-magnet.js",
       "xiaomi-motion": "node-red-contrib-xiaomi-motion/xiaomi-motion.js",
-      "xiaomi-socket": "node-red-contrib-xiaomi-socket/xiaomi-socket.js",
       "xiaomi-switch": "node-red-contrib-xiaomi-switch/xiaomi-switch.js",
+      "xiaomi-socket": "node-red-contrib-xiaomi-socket/xiaomi-socket.js",
+      "xiaomi-socket-wifi": "node-red-contrib-xiaomi-socket-wifi/xiaomi-socket-wifi.js",
       "xiaomi-configurator": "node-red-contrib-xiaomi-configurator/xiaomi-configurator.js"
     }
   },
@@ -24,6 +25,7 @@
   },
   "dependencies": {
     "cryptojs": "^2.5.3",
-    "mustache": "^2.3.0"
+    "mustache": "^2.3.0",
+    "miio": "0.13.0"
   }
 }
