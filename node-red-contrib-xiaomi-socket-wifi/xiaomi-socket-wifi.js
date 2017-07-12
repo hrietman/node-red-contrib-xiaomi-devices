@@ -82,7 +82,9 @@ module.exports = function(RED) {
 
         var setState = function(state) {
             var status = null;
-            var info = {"payload": {
+            var info = null;
+            if (plug) {
+                info = {"payload": {
                     "id": plug.id,
                     "type": plug.type,
                     "model": plug.model,
@@ -91,6 +93,7 @@ module.exports = function(RED) {
                     "port": plug.port,
                     "power": plug.power()
                 }};
+            }
 
             if (state === "on") {
                 node.status({fill:"green", shape:"dot", text:"on"});
