@@ -164,8 +164,15 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType("xiaomi-plug-wifi", XiaomiPlugWifiNode);
 
-    process.on('unhandledRejection', function(reason, p){
-        console.log("Possibly Unhandled Rejection at: Promise ", p, " reason: ", reason);
-        // application specific logging here
+    process.on('unhandledRejection', function(reason, p) {
+        // console.log("Possibly Unhandled Rejection at: Promise ", p, " reason: ", reason);
+        var message = reason + "";
+        if (message.indexOf("Call to device timed out") >= 0) {
+            if (this.plug) {
+                console.log("Issue with miio package; discard plug and reconnect.");
+                this.plug.destroy();
+                this.plug = null;
+            }
+        }
     });
 }
