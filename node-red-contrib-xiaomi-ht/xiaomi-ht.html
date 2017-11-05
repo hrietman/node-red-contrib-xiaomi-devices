@@ -8,6 +8,7 @@
             sid: {value: "", required: true},
             temperature: {value: "{{temperature}}"},
             humidity: {value: "{{humidity}}"},
+            divide: {value: true},
             output: {value: "0"}
         },
         inputs: 1,
@@ -69,10 +70,6 @@
         <label for="node-input-sid"><i class="icon-tag"></i> Device</label>
         <select id="node-input-sid" placeholder="xiaomi gateway"></select>
     </div>
-    <!--<div class="form-row">-->
-        <!--<label for="node-input-sid"><i class="fa fa-id-badge"></i> Device SID</label>-->
-        <!--<input type="text" id="node-input-sid">-->
-    <!--</div>-->
     <div class="form-row">
         <label for="node-input-output"><i class="icon-tag"></i> Output</label>
         <select id="node-input-output" style="width:70%;">
@@ -87,7 +84,12 @@
     </div>
     <div class="form-row node-input-msg">
         <label for="node-input-humidity"><i class="fa fa-mixcloud"></i> Humidity</label>
-        <input type="text" id="node-input-humidity">
+        <input type="text" id="node-input-humidity"/>
+    </div>
+    <div class="form-row node-input-msg">
+        <label>&nbsp;</label>
+        <i></i>&nbsp;&nbsp;<input type="checkbox" id="node-input-divide" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-divide" style="width: 70%;">Divide values by 100</label>
     </div>
 </script>
 
@@ -135,7 +137,14 @@
     <p>Only passes the string values for temperature on output 1 and humidity on output 2.</p>
     <h4>Template</h4>
     <p>Use your own template to pass the values on. The template can contain <a href="http://mustache.github.io/mustache.5.html">mustache-style</a> tags.
-        Any property from the data section of the full object can be used.</p>
+        Any property from the data section of the full object can be used. As the HT sensor is sending data in thousends, you can check this box to have it in hundreds.
+        Here an template example to send the temperature to homebridge-mqtt:
+        <pre>
+        {
+            "name":"Temperatuur woonkamer",
+            "characteristic":"CurrentTemperature",
+            "value":{{temperature}}
+        }</pre></p>
 
     <p>Sample message:</p>
     <p><pre>

@@ -1,7 +1,6 @@
 module.exports = function(RED) {
     "use strict";
     var mustache = require("mustache");
-    var udpInputPortsInUse = {};
     var dgram = require('dgram');
 
     function XiaomiHtNode(config) {
@@ -11,6 +10,7 @@ module.exports = function(RED) {
         this.output = config.output;
         this.temperature = config.temperature;
         this.humidity = config.humidity;
+        this.divide = config.divide;
 
         var node = this;
 
@@ -55,10 +55,16 @@ module.exports = function(RED) {
                         var humidity = null;
 
                         if (data.temperature) {
+                            if (this.divide) {
+                                data.temperature = String(data.temperature / 100);
+                            }
                             temp = {"payload": mustache.render(node.temperature, data)}
                         }
 
                         if (data.humidity) {
+                            if (this.divide) {
+                                data.humidity = String(data.humidity / 100);
+                            }
                             humidity = {"payload": mustache.render(node.humidity, data)}
                         }
                         node.send([temp, humidity]);
