@@ -58,7 +58,7 @@ module.exports = function(RED) {
 
         node.on('close', function (done) {
             if (retryTimer) {
-                clearInterval(retryTimer);
+                clearTimeout(retryTimer);
             }
             if (delayedStatusMsgTimer) {
                 clearTimeout(delayedStatusMsgTimer);
@@ -132,7 +132,6 @@ module.exports = function(RED) {
                         connectionState = "connected";
                         delayedStatusMsgUpdate();
                     }
-                    watchdog();
                 })
                 .catch(function (error) {
                     connectionState = "reconnecting";
@@ -140,28 +139,20 @@ module.exports = function(RED) {
                         node.plug.destroy();
                         node.plug = null;
                     }
-                    watchdog();
                 })
         };
 
         var watchdog = function() {
-            console.log("retrytimer started");
-            var interval = 10;
-            retryTimer = setInterval(function() {
-                if (interval == 0) {
-                    interval = 10;
-                    clearInterval(retryTimer);
-                    discoverDevice();
-                } else {
-                    interval--;
-                    if (connectionState === "reconnecting") {
-                       node.status({fill: "red", shape: "dot", text: "retrying in " + interval + " sec."});
-                    }
+            setTimeout(function retryTimer() {
+                discoverDevice();
+                if (connectionState === "reconnecting") {
+                    node.status({fill: "red", shape: "dot", text: "reconnecting"});
                 }
-            }, 1000);
+                setTimeout(retryTimer, 30000);
+            }, 30000);
         }
-
     }
+
     RED.nodes.registerType("xiaomi-plug-wifi", XiaomiPlugWifiNode);
 
     process.on('unhandledRejection', function(reason, p) {
