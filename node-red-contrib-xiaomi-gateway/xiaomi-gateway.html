@@ -1,0 +1,139 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--  The Input Node  -->
+<script type="text/x-red" data-template-name="xiaomi-gateway in">
+    <div class="form-row">
+        <label for="node-input-gateway"><i class="icon-tag"></i> Gateway</label>
+        <input type="text" id="node-input-gateway" placeholder="xiaomi gateway">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ip"><i class="icon-tag"></i> IP</label>
+        <input type="text" id="node-input-ip" placeholder="IP" readonly>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="xiaomi-gateway in">
+    <p>A Xiaomi Gateway input node, that produces a <code>msg.payload</code> containing a
+    string with the gateway message content.
+    </p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('xiaomi-gateway in',{
+        category: 'xiaomi',
+        color: '#087F8A',
+        defaults: {
+            name: {value:""},
+            gateway: {value:"", type:"xiaomi-configurator"},
+            ip: {value:""}
+        },
+        inputs:0,
+        outputs:1,
+        paletteLabel: "gateway in",
+        icon: "bridge-dash.png",
+        label: function() {
+            return this.name||"xiaomi-gateway";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        oneditprepare: function() {
+            function changeGateway() {
+                var configNodeID = $('#node-input-gateway').val();
+                if (configNodeID) {
+                    var configNode = RED.nodes.node(configNodeID);
+                    if(configNode) {
+                        if(!this.name) {
+                            $("#node-input-name").val(configNode.name);
+                        }
+                        $('#node-input-ip').val(configNode.ip);
+                    }
+                }
+            }
+
+            $("#node-input-gateway").change(function () {
+                changeGateway();
+            });
+        }
+    });
+</script>
+
+
+<!--  The Output Node  -->
+<script type="text/x-red" data-template-name="xiaomi-gateway out">
+<div class="form-row">
+    <label for="node-input-gateway"><i class="icon-tag"></i> Gateway</label>
+    <input type="text" id="node-input-gateway" placeholder="xiaomi gateway">
+</div>
+<div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+</div>
+<div class="form-row">
+    <label for="node-input-ip"><i class="icon-tag"></i> IP</label>
+    <input type="text" id="node-input-ip" placeholder="IP" readonly>
+</div>
+</script>
+
+<script type="text/x-red" data-help-name="xiaomi-gateway out">
+<p>This node sends <code>msg.payload</code> to the configured Xiaomi Gateway.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('xiaomi-gateway out',{
+        category: 'xiaomi',
+        color: '#087F8A',
+        defaults: {
+            name: {value:""},
+            gateway: {value:"", type:"xiaomi-configurator"},
+            ip: {value:""}
+        },
+        inputs:1,
+        outputs:0,
+        paletteLabel: "gateway out",
+        icon: "bridge-dash.png",
+        align: "right",
+        label: function() {
+            return this.name||"xiaomi-gateway";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        oneditprepare: function() {
+            function changeGateway() {
+                var configNodeID = $('#node-input-gateway').val();
+                if (configNodeID) {
+                    var configNode = RED.nodes.node(configNodeID);
+                    if(configNode) {
+                        if(!this.name) {
+                            $("#node-input-name").val(configNode.name);
+                        }
+                        $('#node-input-ip').val(configNode.ip);
+                    }
+                }
+            }
+
+            $("#node-input-gateway").change(function () {
+                changeGateway();
+            });
+        }
+    });
+</script>
