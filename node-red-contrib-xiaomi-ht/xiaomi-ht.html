@@ -8,12 +8,13 @@
             sid: {value: "", required: true},
             temperature: {value: "{{temperature}}"},
             humidity: {value: "{{humidity}}"},
+            pressure: {value: "{{pressure}}"},
             divide: {value: true},
             output: {value: "0"}
         },
         inputs: 1,
-        outputs: 2,
-        outputLabels: ["Temperature","Humidity"],
+        outputs: 3,
+        outputLabels: ["Temperature","Humidity","Pressure"],
         paletteLabel: "sensor HT",
         icon: "thermometer-icon.png",
         label: function () {
@@ -87,6 +88,10 @@
         <input type="text" id="node-input-humidity"/>
     </div>
     <div class="form-row node-input-msg">
+        <label for="node-input-pressure"><i class="fa fa-mixcloud"></i> Pressure</label>
+        <input type="text" id="node-input-pressure"/>
+    </div>
+    <div class="form-row node-input-msg">
         <label>&nbsp;</label>
         <i></i>&nbsp;&nbsp;<input type="checkbox" id="node-input-divide" style="display: inline-block; width: auto; vertical-align: top;">
         <label for="node-input-divide" style="width: 70%;">Divide values by 100</label>
@@ -101,7 +106,7 @@
         <dt>payload
             <span class="property-type">json</span>
         </dt>
-        <dd>Gateway <code>sensor_ht</code> message of type <code>read_ack</code>, <code>heartbeat</code> or <code>report</code></dd>
+        <dd>Gateway <code>sensor_ht</code> and <code>weather.v1</code> message of type <code>read_ack</code>, <code>heartbeat</code> or <code>report</code></dd>
     </dl>
 
     <h3>Outputs</h3>
@@ -121,7 +126,7 @@
     </ol>
 
     <h3>Details</h3>
-    <p>The incoming json message is parsed if the type model is <code>sensor_ht</code> and
+    <p>The incoming json message is parsed if the type model is <code>sensor_ht</code> or <code>weather.v1</code> and
      the <code>sid</code> matches the configured value for this device.</p>
     <p>Three output types are supported:
         <ul>
@@ -156,7 +161,8 @@
         data: "{
                     "voltage":3005,
                     "temperature":"2325",
-                    "humidity":"5699"
+                    "humidity":"5699",
+                    "pressure":"98126"
                }"
     }</pre></p>
 

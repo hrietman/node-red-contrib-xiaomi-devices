@@ -19,7 +19,7 @@ module.exports = function(RED) {
                 // var payload = JSON.parse(msg);
                 var payload = msg.payload;
 
-                if (payload.sid == node.sid && payload.model == "switch") {
+                if (payload.sid == node.sid && ["switch", "sensor_switch.aq2"].indexOf(payload.model) >= 0) {
                     var data = JSON.parse(payload.data)
 
                     if (data.voltage) {

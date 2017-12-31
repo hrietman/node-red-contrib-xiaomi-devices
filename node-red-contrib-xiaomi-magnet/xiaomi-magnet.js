@@ -21,7 +21,7 @@ module.exports = function(RED) {
                 // var payload = JSON.parse(msg);
                 var payload = msg.payload;
 
-                if (payload.sid == node.sid && payload.model == "magnet") {
+                if (payload.sid == node.sid && ["magnet", "sensor_magnet.aq2"].indexOf(payload.model) >= 0) {
                     var data = JSON.parse(payload.data)
 
                     // if (data.status && data.status == "open") {

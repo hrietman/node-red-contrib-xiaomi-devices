@@ -22,7 +22,7 @@ module.exports = function(RED) {
                 var payload = msg.payload;
                 node.log("Received message from: " + payload.model + " sid: " + payload.sid + " payload: " + payload.data);
 
-                if (payload.sid == node.sid && payload.model == "sensor_ht") {
+                if (payload.sid == node.sid && ["sensor_ht", "weather.v1"].indexOf(payload.model) >= 0) {
                     var data = JSON.parse(payload.data)
 
                     if (data.voltage) {
@@ -41,6 +41,7 @@ module.exports = function(RED) {
                     } else if (node.output == "1") {
                         var temp = null;
                         var humidity = null;
+                        var pressure = null;
 
                         if (data.temperature) {
                             temp = {"payload": data.temperature};
@@ -49,10 +50,15 @@ module.exports = function(RED) {
                         if (data.humidity) {
                             humidity = {"payload": data.humidity};
                         }
-                        node.send([temp, humidity]);
+
+                        if (data.pressure) {
+                            pressure = {"payload": data.pressure};
+                        }
+                        node.send([temp, humidity, pressure]);
                     } else if (node.output == "2") {
                         var temp = null;
                         var humidity = null;
+                        var pressure = null;
 
                         if (data.temperature) {
                             if (this.divide) {
@@ -67,7 +73,14 @@ module.exports = function(RED) {
                             }
                             humidity = {"payload": mustache.render(node.humidity, data)}
                         }
-                        node.send([temp, humidity]);
+
+                        if (data.pressure) {
+                            if (this.divide) {
+                                data.pressure = String(data.pressure / 1000);
+                            }
+                            pressure = {"payload": mustache.render(node.pressure, data)}
+                        }
+                        node.send([temp, humidity, pressure]);
                     }
                 }
             });
