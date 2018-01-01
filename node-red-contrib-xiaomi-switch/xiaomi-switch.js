@@ -19,7 +19,6 @@ module.exports = function(RED) {
             node.on('input', function(msg) {
                 // var payload = JSON.parse(msg);
                 var payload = msg.payload;
-
                 if (payload.sid == node.sid && ["switch", "sensor_switch.aq2"].indexOf(payload.model) >= 0) {
                     var data = payload.data;
                     miDevicesUtils.setStatus(node, data);
