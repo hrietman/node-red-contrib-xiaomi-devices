@@ -53,9 +53,9 @@
     <p>Ask the gateway to the list of devices ids.</p>
 
     <h3>Outputs</h3>
-    <p class="node-ports">
-        Message to connect to a gateway out node.
-    </p>
+    <ol class="node-ports">
+        <li>Message to connect to a gateway out node.</li>
+    </ol>
 </script>
 
 <script type="text/javascript">
@@ -88,7 +88,7 @@
 <script type="text/x-red" data-help-name="xiaomi-actions click">
     <p>
         Virtual single click for switch.
-        Note: a gateway input node must be present to get gateway tokens.
+        Note: a gateway input node must be present and have receive a message to get gateway tokens and be able to do the action.
     </p>
 
     <h3>Inputs</h3>
@@ -104,9 +104,9 @@
     </dl>
 
     <h3>Outputs</h3>
-    <p class="node-ports">
-        Message to connect to a gateway out node.
-    </p>
+    <ol class="node-ports">
+        <li>Message to connect to a gateway out node.</li>
+    </ol>
 </script>
 
 <script type="text/javascript">
@@ -138,7 +138,7 @@
 <script type="text/x-red" data-help-name="xiaomi-actions double_click">
     <p>
         Virtual double click for switch.
-        Note: a gateway input node must be present to get gateway tokens.
+        Note: a gateway input node must be present and have receive a message to get gateway tokens and be able to do the action.
     </p>
 
     <h3>Inputs</h3>
@@ -154,9 +154,9 @@
     </dl>
 
     <h3>Outputs</h3>
-    <p class="node-ports">
-        Message to connect to a gateway out node.
-    </p>
+    <ol class="node-ports">
+        <li>Message to connect to a gateway out node.</li>
+    </ol>
 </script>
 
 <script type="text/javascript">
@@ -174,4 +174,70 @@
             return this.name||"double click";
         }
     });
+</script>
+
+
+<!--  The Gateway light Node  -->
+<script type="text/javascript">
+    RED.nodes.registerType('xiaomi-actions gateway_light', {
+        category: 'xiaomi actions',
+        color: '#64C4CD',
+        defaults: {
+            gateway: {value:"", type:"xiaomi-configurator"},
+            name: {value: ""}
+        },
+        inputs: 1,
+        outputs: 1,
+        paletteLabel: "set light",
+        icon: "light-icon.png",
+        label: function () {
+            return this.name || "set light";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="xiaomi-actions gateway_light">
+    <div class="form-row">
+        <label for="node-input-gateway"><i class="icon-tag"></i> Gateway</label>
+        <input type="text" id="node-input-gateway" placeholder="xiaomi gateway">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="xiaomi-actions gateway_light">
+    <p>Change the light of the gateway.
+    Note: a gateway input node must be present and have receive a message to get gateway tokens and be able to do the action.
+    </p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>brightness
+            <span class="property-type">number</span>
+        </dt>
+        <dd>The brightness value between <code>0</code> and <code>100</code>.</dd>
+        <dt>color
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The color itself. This object must contain the followinf properties:
+            <ul>
+            <li>
+                <code>red</code> - amout of red, between <code>0</code> and <code>255</code>
+            </li>
+            <li>
+                <code>green</code> - amout of green, between <code>0</code> and <code>255</code>
+            </li>
+            <li>
+                <code>blue</code> - amout of blue, between <code>0</code> and <code>255</code>
+            </li>
+            </ul>
+        </dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Message to connect to a gateway out node.</li>
+    </ol>
 </script>

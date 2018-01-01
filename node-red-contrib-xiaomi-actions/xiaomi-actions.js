@@ -73,4 +73,29 @@ module.exports = function(RED) {
         });
     }
     RED.nodes.registerType("xiaomi-actions double_click", XiaomiActionDoubleClick);
+
+
+
+
+    function XiaomiActionGatewayLight(config) {
+        RED.nodes.createNode(this, config);
+        this.gateway = RED.nodes.getNode(config.gateway);
+        var node = this;
+
+        node.on('input', function(msg) {
+            if(node.gateway && node.gateway.sid && node.gateway.key && node.gateway.lastToken) {
+                var rgb = miDevicesUtils.computeColorValue(msg.brightness, msg.color.red, msg.color.green, msg.color.blue);
+                msg.payload = {
+                    cmd: "write",
+                    data: {
+                        rgb: rgb,
+                        sid: node.gateway.sid,
+                        key: miDevicesUtils.getGatewayKey(node.gateway.key, node.gateway.lastToken)
+                    }
+                };
+                node.send(msg);
+            }
+        });
+    }
+    RED.nodes.registerType("xiaomi-actions gateway_light", XiaomiActionGatewayLight);
 }

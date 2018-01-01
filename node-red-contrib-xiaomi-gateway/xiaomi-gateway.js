@@ -12,8 +12,30 @@ module.exports = function(RED) {
 
         if (this.gateway) {
             node.on('input', function(msg) {
-                msg.gateway = node.gateway;
-                node.send(msg);
+                // var payload = JSON.parse(msg);
+                var payload = msg.payload;
+                node.log("Received message from: " + payload.model + " sid: " + payload.sid + " payload: " + payload.data);
+
+                // Input from gateway
+                if(payload.sid) {
+                    if (payload.sid == node.gateway.sid && ["gateway"].indexOf(payload.model) >= 0) {
+                        if(payload.data.rgb) {
+                            var decomposed = miDevicesUtils.computeColor(payload.data.rgb);
+                            payload.data.brightness = decomposed.brightness;
+                            payload.data.color = decomposed.color;
+                        }
+                        node.send([msg]);
+                    }
+                }
+                // Prepare for request
+                else {
+                    msg.gateway = node.gateway;
+                    msg.sid = node.gateway.sid;
+                    node.send(msg);
+                }
+            });
+
+            node.on("close", function() {
             });
         }
     }

@@ -6,9 +6,12 @@
     "type": "git",
     "url": "git+ssh://git@github.com:hrietman/node-red-contrib-xiaomi-devices.git"
   },
-  "license" : "MIT",
-  "keywords": ["Xiaomi", "node-red"],
-  "node-red"     : {
+  "license": "MIT",
+  "keywords": [
+    "Xiaomi",
+    "node-red"
+  ],
+  "node-red": {
     "nodes": {
       "xiaomi-ht": "node-red-contrib-xiaomi-ht/xiaomi-ht.js",
       "xiaomi-magnet": "node-red-contrib-xiaomi-magnet/xiaomi-magnet.js",

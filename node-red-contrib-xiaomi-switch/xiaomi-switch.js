@@ -21,30 +21,32 @@ module.exports = function(RED) {
                 var payload = msg.payload;
 
                 // Input from gateway
-                if (payload.sid == node.sid && ["switch", "sensor_switch.aq2"].indexOf(payload.model) >= 0) {
-                    var data = payload.data;
-                    miDevicesUtils.setStatus(node, data);
+                if (payload.sid) {
+                    if (payload.sid == node.sid && ["switch", "sensor_switch.aq2"].indexOf(payload.model) >= 0) {
+                        var data = payload.data;
+                        miDevicesUtils.setStatus(node, data);
 
-                    if (node.output == "0") {
-                        node.send([msg]);
-                    } else if (node.output == "1") {
-                        var status = null;
+                        if (node.output == "0") {
+                            node.send([msg]);
+                        } else if (node.output == "1") {
+                            var status = null;
 
-                        if (data.status) {
-                            status = {"payload": data.status};
-                        }
-                        node.send([status]);
-                    } else if (node.output == "2") {
-                        var status = null;
+                            if (data.status) {
+                                status = {"payload": data.status};
+                            }
+                            node.send([status]);
+                        } else if (node.output == "2") {
+                            var status = null;
 
-                        if (data.status && data.status == "click") {
-                            status = {"payload": mustache.render(node.outmsg, data)}
-                            node.send([[status],[]]);
-                        }
+                            if (data.status && data.status == "click") {
+                                status = {"payload": mustache.render(node.outmsg, data)}
+                                node.send([[status],[]]);
+                            }
 
-                        if (data.status && data.status == "double_click") {
-                            status = {"payload": mustache.render(node.outmsgdbcl, data)}
-                            node.send([[],[status]]);
+                            if (data.status && data.status == "double_click") {
+                                status = {"payload": mustache.render(node.outmsgdbcl, data)}
+                                node.send([[],[status]]);
+                            }
                         }
                     }
                 }

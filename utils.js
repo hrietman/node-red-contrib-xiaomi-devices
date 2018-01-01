@@ -42,5 +42,27 @@ module.exports = {
     prepareForGatewayRequest: function(node, msg) {
         msg.sid = node.sid;
         msg.gateway = node.gateway;
+    },
+    computeColorValue: function (brightness, red, green, blue) {
+        return Math.round(256*256*256*brightness) + (256*256*red) + (256*green) + blue;
+    },
+    computeColor: function (rgb) {
+        var blue = rgb % 256;
+        rgb = Math.max(rgb - blue, 0);
+
+        var green = rgb % (256 * 256);
+        rgb = Math.max(rgb - green, 0);
+        green /= 256;
+
+        var red = rgb % (256 * 256 * 256);
+        rgb = Math.max(rgb - red, 0);
+        red /= 256 * 256;
+
+        var brightness = rgb / (256*256*256);
+
+        return {
+            brightness: brightness,
+            color: { red: red, green: green, blue: blue }
+        };
     }
 }
