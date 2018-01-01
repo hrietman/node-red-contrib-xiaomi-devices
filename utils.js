@@ -1,4 +1,5 @@
-
+var crypto = require("crypto");
+var iv = Buffer.from([0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58, 0x56, 0x2e]);
 
 module.exports = {
     computeBatteryLevel: function(voltage) {
@@ -29,5 +30,17 @@ module.exports = {
             payload.data.batteryLevel = this.computeBatteryLevel(payload.data.voltage);
         }
         return payload;
+    },
+    getGatewayKey: function(password, token) {
+        var cipher = crypto.createCipheriv('aes-128-cbc', password, iv);
+        var gatewayToken = token;
+        var key = cipher.update(gatewayToken, "ascii", "hex");
+        cipher.final('hex');
+
+        return key;
+    },
+    prepareForGatewayRequest: function(node, msg) {
+        msg.sid = node.sid;
+        msg.gateway = node.gateway;
     }
 }

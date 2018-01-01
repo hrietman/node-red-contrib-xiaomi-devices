@@ -22,6 +22,7 @@ module.exports = function(RED) {
     // The Input Node
     function GatewayIn(n) {
         RED.nodes.createNode(this,n);
+        this.gateway = RED.nodes.getNode(n.gateway);
         this.group = "224.0.0.50";
         this.port = 9898;
         this.iface = null;
@@ -62,6 +63,9 @@ module.exports = function(RED) {
                     jsonMsg.data = JSON.parse(jsonMsg.data) || jsonMsg.data;
                 }
                 msg = { payload: jsonMsg };
+                if(jsonMsg.token && node.gateway && jsonMsg.data.ip && jsonMsg.data.ip === node.gateway.ip) {
+                    node.gateway.lastToken = jsonMsg.token;
+                }
                 node.send(msg);
             }
         });

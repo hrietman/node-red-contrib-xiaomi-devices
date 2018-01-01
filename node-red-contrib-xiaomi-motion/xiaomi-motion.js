@@ -62,6 +62,11 @@ module.exports = function(RED) {
                         node.send([status]);
                     }
                 }
+                // Prepare for request
+                else {
+                    miDevicesUtils.prepareForGatewayRequest(node, msg);
+                    node.send(msg);
+                }
             });
 
             node.on("close", function() {

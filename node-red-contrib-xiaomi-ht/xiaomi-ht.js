@@ -22,6 +22,7 @@ module.exports = function(RED) {
                 var payload = msg.payload;
                 node.log("Received message from: " + payload.model + " sid: " + payload.sid + " payload: " + payload.data);
 
+                // Input from gateway
                 if (payload.sid == node.sid && ["sensor_ht", "weather.v1"].indexOf(payload.model) >= 0) {
                     var data = payload.data;
                     miDevicesUtils.setStatus(node, data);
@@ -73,6 +74,11 @@ module.exports = function(RED) {
                         }
                         node.send([temp, humidity, pressure]);
                     }
+                }
+                // Prepare for request
+                else {
+                    miDevicesUtils.prepareForGatewayRequest(node, msg);
+                    node.send(msg);
                 }
             });
 

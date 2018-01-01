@@ -19,6 +19,8 @@ module.exports = function(RED) {
             node.on('input', function(msg) {
                 // var payload = JSON.parse(msg);
                 var payload = msg.payload;
+
+                // Input from gateway
                 if (payload.sid == node.sid && ["switch", "sensor_switch.aq2"].indexOf(payload.model) >= 0) {
                     var data = payload.data;
                     miDevicesUtils.setStatus(node, data);
@@ -46,6 +48,11 @@ module.exports = function(RED) {
                             node.send([[],[status]]);
                         }
                     }
+                }
+                // Prepare for request
+                else {
+                    miDevicesUtils.prepareForGatewayRequest(node, msg);
+                    node.send(msg);
                 }
             });
 
