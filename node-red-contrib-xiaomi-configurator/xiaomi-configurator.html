@@ -3,6 +3,8 @@
         category: 'config',
         defaults: {
             name: {value: ""},
+            ip: {value: ""},
+            sid: {value: ""},
             deviceList: {value:[{ sid:"", desc:"", model:"plug"}]},
             key: {value: ""}
         },
@@ -59,6 +61,12 @@
         oneditsave: function() {
             var devices = $("#node-config-input-devices").editableList('items');
             var node = this;
+            RED.nodes.eachNode(function(tmpNode) {
+                if(tmpNode.type.indexOf("xiaomi-gateway") === 0 && tmpNode.gateway == node.id) {
+                    tmpNode.ip = $("#node-config-input-ip").val();
+                    tmpNode.changed = true;
+                }
+            });
             var devicesArray = [];
             devices.each(function(i) {
                 var deviceElement = $(this);
@@ -81,7 +89,15 @@
         <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name">
     </div>
-        <div class="form-row">
+    <div class="form-row">
+        <label for="node-config-input-ip"><i class="icon-tag"></i> IP address (v4 or v6)</label>
+        <input type="text" id="node-config-input-ip" placeholder="IP">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sid"><i class="icon-tag"></i> SID (optional)</label>
+        <input type="text" id="node-input-sid" placeholder="sid">
+    </div>
+    <div class="form-row">
         <label for="node-config-input-key"><i class="fa fa-ticket"></i> Key/Password</label>
         <input type="text" id="node-config-input-key" placeholder="Key">
     </div>

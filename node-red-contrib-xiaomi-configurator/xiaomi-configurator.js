@@ -5,6 +5,8 @@ module.exports = function(RED) {
         this.name = n.name;
         this.deviceList = n.deviceList || [];
         this.key = n.key;
+        this.ip = n.ip;
+        this.sid = this.sid || n.sid;
 
         var node = this;
     }

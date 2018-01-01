@@ -2,6 +2,7 @@ module.exports = function(RED) {
     "use strict";
     var mustache = require("mustache");
     var dgram = require('dgram');
+    var miDevicesUtils = require('../utils');
 
     function XiaomiHtNode(config) {
         RED.nodes.createNode(this, config);
@@ -13,8 +14,7 @@ module.exports = function(RED) {
         this.divide = config.divide;
 
         var node = this;
-
-        node.status({fill:"grey",shape:"ring",text:"battery"});
+        node.status({fill:"grey", shape:"ring", text:"battery - na"});
 
         if (this.gateway) {
             node.on('input', function(msg) {
@@ -22,53 +22,64 @@ module.exports = function(RED) {
                 var payload = msg.payload;
                 node.log("Received message from: " + payload.model + " sid: " + payload.sid + " payload: " + payload.data);
 
-                if (payload.sid == node.sid && payload.model == "sensor_ht") {
-                    var data = JSON.parse(payload.data)
+                // Input from gateway
+                if(payload.sid) {
+                    if (payload.sid == node.sid && ["sensor_ht", "weather.v1"].indexOf(payload.model) >= 0) {
+                        var data = payload.data;
+                        miDevicesUtils.setStatus(node, data);
 
-                    if (data.voltage) {
-                        if (data.voltage < 2500) {
-                            node.status({fill:"red",shape:"dot",text:"battery"});
-                        } else if (data.voltage < 2900) {
-                            node.status({fill:"yellow",shape:"dot",text:"battery"});
-                        } else {
-                            node.status({fill:"green",shape:"dot",text:"battery"});
+                        if (node.output == "0") {
+                            node.send([msg]);
+                        } else if (node.output == "1") {
+                            var temp = null;
+                            var humidity = null;
+                            var pressure = null;
+
+                            if (data.temperature) {
+                                temp = {"payload": data.temperature};
+                            }
+
+                            if (data.humidity) {
+                                humidity = {"payload": data.humidity};
+                            }
+
+                            if (data.pressure) {
+                                pressure = {"payload": data.pressure};
+                            }
+                            node.send([temp, humidity, pressure]);
+                        } else if (node.output == "2") {
+                            var temp = null;
+                            var humidity = null;
+                            var pressure = null;
+
+                            if (data.temperature) {
+                                if (this.divide) {
+                                    data.temperature = String(data.temperature / 100);
+                                }
+                                temp = {"payload": mustache.render(node.temperature, data)}
+                            }
+
+                            if (data.humidity) {
+                                if (this.divide) {
+                                    data.humidity = String(data.humidity / 100);
+                                }
+                                humidity = {"payload": mustache.render(node.humidity, data)}
+                            }
+
+                            if (data.pressure) {
+                                if (this.divide) {
+                                    data.pressure = String(data.pressure / 100);
+                                }
+                                pressure = {"payload": mustache.render(node.pressure, data)}
+                            }
+                            node.send([temp, humidity, pressure]);
                         }
                     }
-
-                    if (node.output == "0") {
-                        msg.payload = payload;
-                        node.send([msg]);
-                    } else if (node.output == "1") {
-                        var temp = null;
-                        var humidity = null;
-
-                        if (data.temperature) {
-                            temp = {"payload": data.temperature};
-                        }
-
-                        if (data.humidity) {
-                            humidity = {"payload": data.humidity};
-                        }
-                        node.send([temp, humidity]);
-                    } else if (node.output == "2") {
-                        var temp = null;
-                        var humidity = null;
-
-                        if (data.temperature) {
-                            if (this.divide) {
-                                data.temperature = String(data.temperature / 100);
-                            }
-                            temp = {"payload": mustache.render(node.temperature, data)}
-                        }
-
-                        if (data.humidity) {
-                            if (this.divide) {
-                                data.humidity = String(data.humidity / 100);
-                            }
-                            humidity = {"payload": mustache.render(node.humidity, data)}
-                        }
-                        node.send([temp, humidity]);
-                    }
+                }
+                // Prepare for request
+                else {
+                    miDevicesUtils.prepareForGatewayRequest(node, msg);
+                    node.send(msg);
                 }
             });
 
