@@ -16,6 +16,7 @@
       "xiaomi-switch": "node-red-contrib-xiaomi-switch/xiaomi-switch.js",
       "xiaomi-socket": "node-red-contrib-xiaomi-socket/xiaomi-socket.js",
       "xiaomi-socket-wifi": "node-red-contrib-xiaomi-socket-wifi/xiaomi-socket-wifi.js",
+      "xiaomi-all": "node-red-contrib-xiaomi-all/xiaomi-all.js",
       "xiaomi-configurator": "node-red-contrib-xiaomi-configurator/xiaomi-configurator.js",
       "xiaomi-gateway": "node-red-contrib-xiaomi-gateway/xiaomi-gateway.js",
       "xiaomi-actions": "node-red-contrib-xiaomi-actions/xiaomi-actions.js"

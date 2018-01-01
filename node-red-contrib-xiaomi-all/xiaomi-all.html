@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    RED.nodes.registerType('xiaomi-all', {
+        category: 'xiaomi',
+        color: '#3FADB5',
+        defaults: {
+            gateway: {value:"", type:"xiaomi-configurator"},
+            name: {value: ""}
+        },
+        inputs: 1,
+        outputs: 1,
+        outputLabels: ["All devices"],
+        paletteLabel: "all",
+        icon: "light-icon.png",
+        label: function () {
+            return this.name || "xiaomi-all";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="xiaomi-all">
+    <div class="form-row">
+        <label for="node-input-gateway"><i class="icon-tag"></i> Gateway</label>
+        <input type="text" id="node-input-gateway" placeholder="xiaomi gateway">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="xiaomi-all">
+    <p>All devices registred in the gateway.</p>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Devices output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">array</span></dt>
+                <dd>Array of devices.</dd>
+            </dl>
+        </li>
+    </ol>
+</script>
