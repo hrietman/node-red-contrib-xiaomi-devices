@@ -1,23 +1,22 @@
-/**
- * Copyright JS Foundation and other contributors, http://js.foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- **/
-
 module.exports = function(RED) {
     "use strict";
     var dgram = require('dgram');
     var udpInputPortsInUse = {};
+
+    function XiaomiGatewayNode(config) {
+        RED.nodes.createNode(this, config);
+        this.gateway = RED.nodes.getNode(config.gateway);
+
+        var node = this;
+
+        if (this.gateway) {
+            node.on('input', function(msg) {
+                msg.gateway = node.gateway;
+                node.send(msg);
+            });
+        }
+    }
+    RED.nodes.registerType("xiaomi-gateway", XiaomiGatewayNode);
 
     // The Input Node
     function GatewayIn(n) {
@@ -65,6 +64,9 @@ module.exports = function(RED) {
                 msg = { payload: jsonMsg };
                 if(jsonMsg.token && node.gateway && jsonMsg.data.ip && jsonMsg.data.ip === node.gateway.ip) {
                     node.gateway.lastToken = jsonMsg.token;
+                    if(!node.gateway.sid) {
+                        node.gateway.sid = jsonMsg.sid;
+                    }
                 }
                 node.send(msg);
             }
