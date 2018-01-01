@@ -98,4 +98,54 @@ module.exports = function(RED) {
         });
     }
     RED.nodes.registerType("xiaomi-actions gateway_light", XiaomiActionGatewayLight);
+
+
+
+
+    function XiaomiActionGatewaySound(config) {
+        RED.nodes.createNode(this, config);
+        this.gateway = RED.nodes.getNode(config.gateway);
+        this.mid = config.mid;
+        this.volume = config.volume;
+        var node = this;
+
+        node.on('input', function(msg) {
+            if(node.gateway && node.gateway.sid && node.gateway.key && node.gateway.lastToken) {
+                msg.payload = {
+                    cmd: "write",
+                    data: {
+                        mid: parseInt(msg.mid || node.mid),
+                        volume: parseInt(msg.volume || node.volume),
+                        sid: node.gateway.sid,
+                        key: miDevicesUtils.getGatewayKey(node.gateway.key, node.gateway.lastToken)
+                    }
+                };
+                node.send(msg);
+            }
+        });
+    }
+    RED.nodes.registerType("xiaomi-actions gateway_sound", XiaomiActionGatewaySound);
+
+
+
+    function XiaomiActionGatewayStopSound(config) {
+        RED.nodes.createNode(this, config);
+        this.gateway = RED.nodes.getNode(config.gateway);
+        var node = this;
+
+        node.on('input', function(msg) {
+            if(node.gateway && node.gateway.sid && node.gateway.key && node.gateway.lastToken) {
+                msg.payload = {
+                    cmd: "write",
+                    data: {
+                        mid: 1000,
+                        sid: node.gateway.sid,
+                        key: miDevicesUtils.getGatewayKey(node.gateway.key, node.gateway.lastToken)
+                    }
+                };
+                node.send(msg);
+            }
+        });
+    }
+    RED.nodes.registerType("xiaomi-actions gateway_stop_sound", XiaomiActionGatewayStopSound);
 }
