@@ -36,7 +36,6 @@ module.exports = function(RED) {
 
 
                     if (node.output == "0") {
-                        miDevicesUtils.prepareFullDataOutput(payload);
                         node.send([msg]);
                     } else if (node.output == "1") {
                         var status = null;

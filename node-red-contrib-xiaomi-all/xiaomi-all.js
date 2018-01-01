@@ -18,5 +18,4 @@ module.exports = function(RED) {
     }
 
     RED.nodes.registerType("xiaomi-all", XiaomiAllNode);
-
 }

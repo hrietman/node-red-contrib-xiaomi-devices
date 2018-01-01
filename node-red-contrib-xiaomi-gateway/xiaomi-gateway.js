@@ -1,6 +1,7 @@
 module.exports = function(RED) {
     "use strict";
     var dgram = require('dgram');
+    var miDevicesUtils = require('../utils');
     var udpInputPortsInUse = {};
 
     function XiaomiGatewayNode(config) {
@@ -60,6 +61,9 @@ module.exports = function(RED) {
                 var jsonMsg = JSON.parse(msg);
                 if(jsonMsg.data) {
                     jsonMsg.data = JSON.parse(jsonMsg.data) || jsonMsg.data;
+                    if(jsonMsg.data.voltage) {
+                        jsonMsg.data.batteryLevel = miDevicesUtils.computeBatteryLevel(jsonMsg.data.voltage);
+                    }
                 }
                 msg = { payload: jsonMsg };
                 if(jsonMsg.token && node.gateway && jsonMsg.data.ip && jsonMsg.data.ip === node.gateway.ip) {
