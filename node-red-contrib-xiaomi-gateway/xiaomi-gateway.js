@@ -56,7 +56,12 @@ module.exports = function(RED) {
         server.on('message', function (message, remote) {
             var msg;
             if(remote.address == node.addr) {
-                msg = { payload: JSON.parse(message.toString('utf8')) };
+                var msg = message.toString('utf8');
+                var jsonMsg = JSON.parse(msg);
+                if(jsonMsg.data) {
+                    jsonMsg.data = JSON.parse(jsonMsg.data) || jsonMsg.data;
+                }
+                msg = { payload: jsonMsg };
                 node.send(msg);
             }
         });

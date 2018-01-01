@@ -1,6 +1,7 @@
 module.exports = function(RED) {
     "use strict";
     var mustache = require("mustache");
+    var miDevicesUtils = require('../utils');
 
     function XiaomiMagnetNode(config) {
         RED.nodes.createNode(this, config);
@@ -14,7 +15,7 @@ module.exports = function(RED) {
         var state = "";
 
         // node.status({fill:"yellow", shape:"dot", text:"unknown state"});
-        node.status({fill:"grey",shape:"ring",text:"battery"});
+        node.status({fill:"grey", shape:"ring", text:"battery - na"});
 
         if (this.gateway) {
             node.on('input', function(msg) {
@@ -22,7 +23,7 @@ module.exports = function(RED) {
                 var payload = msg.payload;
 
                 if (payload.sid == node.sid && ["magnet", "sensor_magnet.aq2"].indexOf(payload.model) >= 0) {
-                    var data = JSON.parse(payload.data)
+                    var data = payload.data;
 
                     // if (data.status && data.status == "open") {
                     //     node.status({fill:"green", shape:"dot", text:"open"});
@@ -31,20 +32,11 @@ module.exports = function(RED) {
                     //     node.status({fill:"red", shape:"dot", text:"closed"});
                     //     state = "closed";
                     // }
-
-                    if (data.voltage) {
-                        if (data.voltage < 2500) {
-                            node.status({fill:"red",shape:"dot",text:"battery"});
-                        } else if (data.voltage < 2900) {
-                            node.status({fill:"yellow",shape:"dot",text:"battery"});
-                        } else {
-                            node.status({fill:"green",shape:"dot",text:"battery"});
-                        }
-                    }
+                    miDevicesUtils.setStatus(node, data);
 
 
                     if (node.output == "0") {
-                        msg.payload = payload;
+                        miDevicesUtils.prepareFullDataOutput(payload);
                         node.send([msg]);
                     } else if (node.output == "1") {
                         var status = null;

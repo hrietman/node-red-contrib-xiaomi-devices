@@ -1,6 +1,7 @@
 module.exports = function(RED) {
     "use strict";
     var mustache = require("mustache");
+    var miDevicesUtils = require('../utils');
 
     function XiaomiSwitchNode(config) {
         RED.nodes.createNode(this, config);
@@ -12,7 +13,7 @@ module.exports = function(RED) {
 
         var node = this;
 
-        node.status({fill:"grey",shape:"ring",text:"battery"});
+        node.status({fill:"grey", shape:"ring", text:"battery - na"});
 
         if (this.gateway) {
             node.on('input', function(msg) {
@@ -20,20 +21,11 @@ module.exports = function(RED) {
                 var payload = msg.payload;
 
                 if (payload.sid == node.sid && ["switch", "sensor_switch.aq2"].indexOf(payload.model) >= 0) {
-                    var data = JSON.parse(payload.data)
-
-                    if (data.voltage) {
-                        if (data.voltage < 2500) {
-                            node.status({fill:"red",shape:"dot",text:"battery"});
-                        } else if (data.voltage < 2900) {
-                            node.status({fill:"yellow",shape:"dot",text:"battery"});
-                        } else {
-                            node.status({fill:"green",shape:"dot",text:"battery"});
-                        }
-                    }
+                    var data = payload.data;
+                    miDevicesUtils.setStatus(node, data);
 
                     if (node.output == "0") {
-                        msg.payload = payload;
+                        miDevicesUtils.prepareFullDataOutput(payload);
                         node.send([msg]);
                     } else if (node.output == "1") {
                         var status = null;

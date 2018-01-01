@@ -2,6 +2,7 @@ module.exports = function(RED) {
     "use strict";
     var mustache = require("mustache");
     var dgram = require('dgram');
+    var miDevicesUtils = require('../utils');
 
     function XiaomiHtNode(config) {
         RED.nodes.createNode(this, config);
@@ -13,8 +14,7 @@ module.exports = function(RED) {
         this.divide = config.divide;
 
         var node = this;
-
-        node.status({fill:"grey",shape:"ring",text:"battery"});
+        node.status({fill:"grey", shape:"ring", text:"battery - na"});
 
         if (this.gateway) {
             node.on('input', function(msg) {
@@ -23,20 +23,11 @@ module.exports = function(RED) {
                 node.log("Received message from: " + payload.model + " sid: " + payload.sid + " payload: " + payload.data);
 
                 if (payload.sid == node.sid && ["sensor_ht", "weather.v1"].indexOf(payload.model) >= 0) {
-                    var data = JSON.parse(payload.data)
-
-                    if (data.voltage) {
-                        if (data.voltage < 2500) {
-                            node.status({fill:"red",shape:"dot",text:"battery"});
-                        } else if (data.voltage < 2900) {
-                            node.status({fill:"yellow",shape:"dot",text:"battery"});
-                        } else {
-                            node.status({fill:"green",shape:"dot",text:"battery"});
-                        }
-                    }
+                    var data = payload.data;
+                    miDevicesUtils.setStatus(node, data);
 
                     if (node.output == "0") {
-                        msg.payload = payload;
+                        miDevicesUtils.prepareFullDataOutput(payload);
                         node.send([msg]);
                     } else if (node.output == "1") {
                         var temp = null;
@@ -76,7 +67,7 @@ module.exports = function(RED) {
 
                         if (data.pressure) {
                             if (this.divide) {
-                                data.pressure = String(data.pressure / 1000);
+                                data.pressure = String(data.pressure / 100);
                             }
                             pressure = {"payload": mustache.render(node.pressure, data)}
                         }
