@@ -1,0 +1,91 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--  The Read Node  -->
+<script type="text/x-red" data-template-name="xiaomi-actions read">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="xiaomi-actions read">
+    <p>Ask the gateway to read the report of the input device.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>sid
+            <span class="property-type">string</span>
+        </dt>
+        <dd>Device <code>sid</code> to ask the report.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <p class="node-ports">
+        Message to connect to a gateway out node.
+    </p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('xiaomi-actions read',{
+        category: 'xiaomi actions',
+        color: '#64C4CD',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        paletteLabel: "read",
+        icon: "function.png",
+        label: function() {
+            return this.name||"read";
+        }
+    });
+</script>
+
+<!--  The get ids Node  -->
+<script type="text/x-red" data-template-name="xiaomi-actions get_id_list">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="xiaomi-actions get_id_list">
+    <p>Ask the gateway to the list of devices ids.</p>
+
+    <h3>Outputs</h3>
+    <p class="node-ports">
+        Message to connect to a gateway out node.
+    </p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('xiaomi-actions get_id_list',{
+        category: 'xiaomi actions',
+        color: '#64C4CD',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        paletteLabel: "get id list",
+        icon: "function.png",
+        label: function() {
+            return this.name||"get id list";
+        }
+    });
+</script>
