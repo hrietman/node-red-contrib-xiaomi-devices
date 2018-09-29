@@ -12,7 +12,7 @@ The following devices are currently supported:
 * Power plug (wifi)
 
 ## Preperation
-To receive the gateway json messages on your network you need to enable the developer mode, aka LAN mode in the gateway.
+To receive the gateway json messages on your network you need to enable the developer mode, aka LAN mode in the gateway. Refer to [openHAB](http://docs.openhab.org/addons/bindings/mihome/readme.html#setup) or [domoticz.com](https://www.domoticz.com/wiki/Xiaomi_Gateway_(Aqara)#Adding_the_Xiaomi_Gateway_to_Domoticz) for the necessary steps. 
 
 A UDP input node is needed to receive the json messages. An UDP output node to send command's to the gateway.
 
