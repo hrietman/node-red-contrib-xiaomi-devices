@@ -56,7 +56,7 @@ module.exports = function(RED) {
                     } else if (node.output == "2") {
                         var status = null;
 
-                        if (data.status === 'open') {
+                        if (data.status === 'open' || data.no_close) {
                             status = {"payload": mustache.render(node.openmsg, data)}
                         } else {
                             status = {"payload": mustache.render(node.closemsg, data)}
